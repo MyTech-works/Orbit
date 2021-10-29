@@ -1,0 +1,367 @@
+﻿
+@model SK_CRM.Models.AggregateModel.Product.ProductDetailsAllModel
+@{
+
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <!-- users list start -->
+            <section class="app-user-list">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h3 class="fw-bolder mb-75">@Model.TotalProducts</h3>
+                                    <span>Total Products</span>
+                                </div>
+                                <div class="avatar bg-light-primary p-50">
+                                    <span class="avatar-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user font-medium-4"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h3 class="fw-bolder mb-75">@Model.ActiveProducts</h3>
+                                    <span>Active Products</span>
+                                </div>
+                                <div class="avatar bg-light-success p-50">
+                                    <span class="avatar-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check font-medium-4"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h3 class="fw-bolder mb-75">@Model.NotActiveProducts</h3>
+                                    <span>Not Active Produts</span>
+                                </div>
+                                <div class="avatar bg-light-warning p-50">
+                                    <span class="avatar-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-x font-medium-4"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h3 class="fw-bolder mb-75">@Model.StockProducts</h3>
+                                    <span>Product Stock</span>
+                                </div>
+                                <div class="avatar bg-light-danger p-50">
+                                    <span class="avatar-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus font-medium-4"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- list and filter start -->
+                <div class="card">
+                    @*<div class="card-body border-bottom">
+                            <h4 class="card-title">Search &amp; Filter</h4>
+                            <div class="row">
+                                <div class="col-md-4 user_role"><label class="form-label" for="UserRole">Role</label><select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Select Role </option><option value="Admin" class="text-capitalize">Admin</option><option value="Author" class="text-capitalize">Author</option><option value="Editor" class="text-capitalize">Editor</option><option value="Maintainer" class="text-capitalize">Maintainer</option><option value="Subscriber" class="text-capitalize">Subscriber</option></select></div>
+                                <div class="col-md-4 user_plan"><label class="form-label" for="UserPlan">Plan</label><select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Select Plan </option><option value="Basic" class="text-capitalize">Basic</option><option value="Company" class="text-capitalize">Company</option><option value="Enterprise" class="text-capitalize">Enterprise</option><option value="Team" class="text-capitalize">Team</option></select></div>
+                                <div class="col-md-4 user_status"><label class="form-label" for="FilterTransaction">Status</label><select id="FilterTransaction" class="form-select text-capitalize mb-md-0 mb-2xx"><option value=""> Select Status </option><option value="Pending" class="text-capitalize">Pending</option><option value="Active" class="text-capitalize">Active</option><option value="Inactive" class="text-capitalize">Inactive</option></select></div>
+                            </div>
+                        </div>*@
+                    <div class="card-datatable table-responsive pt-0">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="d-flex justify-content-between align-items-center header-actions mx-2 row mt-75">
+                                <div class="col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start">
+                                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        <label>
+                                            Show
+                                            <select onchange="product.fnProductGridPagination(0, 'pagesize', this);" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="ddlPageSize" class="form-select">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries
+                                        </label>
+                                    </div>
+                                </div><div class="col-sm-12 col-lg-8 ps-xl-75 ps-0">
+                                    <div class="dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap">
+                                        <div class="me-1">
+                                            <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0" id="txtSearchValue" onchange="product.fnProductGridPagination(1, 'search', this);"></label>
+                                            </div>
+                                        </div>
+                                        <div class="dt-buttons d-inline-flex mt-50">
+                                            @*<button class="dt-button buttons-collection btn btn-outline-secondary dropdown-toggle me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link font-small-4 me-50">
+                                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                                    </svg>Export
+                                                </span>
+                                            </button>*@
+                                            <button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    type="button" data-bs-toggle="modal" data-bs-target="#" onclick="location.href='@Url.Action("create", "product")'">
+                                                <span>Add New Product</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="user-list-table table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1035px;">
+                                <thead class="table-light">
+                                    <tr role="row">
+                                        <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label=""></th>
+                                        <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending">Code</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Description</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Unit Price</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Bal. Stock</th>
+                                        <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.products)
+                                    {
+                                        int i = item.Id;
+                                        string productImage = Model.uploads.Where(x => x.RefId == item.Id).OrderBy(x => x.OrderBy).Select(x => x.ImagePath).FirstOrDefault();
+                                        if (i % 2 == 0)
+                                        {
+                                            <tr class="even">
+                                                <td class=" control" tabindex="0" style="display: none;">
+                                                    <input type="hidden" value="@item.Id" class="hdnRefId" />
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <div class="d-flex justify-content-left align-items-center">
+                                                        <div class="avatar-wrapper">
+                                                            @if (string.IsNullOrWhiteSpace(productImage))
+                                                            {
+                                                                <div class="avatar bg-light-dark me-1">
+                                                                    <span class="avatar-content">NA</span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="avatar  me-1">
+                                                                    <img src="@productImage" alt="Avatar" height="32" width="32">
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="d-flex flex-column">
+                                                            <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                                                <span class="fw-bolder">@item.ProductCode</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="text-nowrap">@item.ProductName</span></td>
+                                                <td><span class="text-nowrap limit-charcters">@item.Description</span></td>
+                                                <td><span class="text-nowrap">@item.UnitPrice</span></td>
+                                                <td><span class="text-nowrap">@item.BalanceStockQty</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-icon" data-bs-toggle="modal" data-bs-target="#editPermissionModal" style="float: left;" onclick="location.href='@Url.Action("edit", "product", new { id = item.Id })'">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-medium-2 text-body"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-icon delete-record" onclick="location.href='@Url.Action("delete", "product", new { id = item.Id })'">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-medium-2 text-body"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="odd">
+                                                <td class=" control" tabindex="0" style="display: none;">
+                                                    <input type="hidden" value="@item.Id" class="hdnRefId" />
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <div class="d-flex justify-content-left align-items-center">
+                                                        <div class="avatar-wrapper">
+                                                            @if (string.IsNullOrWhiteSpace(productImage))
+                                                            {
+                                                                <div class="avatar bg-light-dark me-1">
+                                                                    <span class="avatar-content">NA</span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="avatar  me-1">
+                                                                    <img src="@productImage" alt="Avatar" height="32" width="32">
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="d-flex flex-column">
+                                                            <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                                                <span class="fw-bolder">@item.ProductCode</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="text-nowrap">@item.ProductName</span></td>
+                                                <td><span class="text-nowrap limit-charcters">@item.Description</span></td>
+                                                <td><span class="text-nowrap">@item.UnitPrice</span></td>
+                                                <td><span class="text-nowrap">@item.BalanceStockQty</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-icon" data-bs-toggle="modal" data-bs-target="#editPermissionModal" style="float: left;" onclick="location.href='@Url.Action("edit", "product", new { id = item.Id })'">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-medium-2 text-body"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-icon delete-record" onclick="location.href='@Url.Action("delete", "product", new { id = item.Id })'">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-medium-2 text-body"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mx-2 row mb-1">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @Model.pagefirstNumber to @Model.pageLastNumber of @Model.totalCount entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                        <ul class="pagination">
+
+                                            <li class="paginate_button page-item previous @(Model.ShowPrevious == true ? "" : "disabled")" id="DataTables_Table_0_previous">
+                                                <a onclick="product.fnProductGridPagination(0, 'prev', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                                            </li>
+                                            @{
+                                                for (int i = Model.MinPage; i <= Model.MaxPage; i++)
+                                                {
+                                                    <li class="paginate_button page-item @(i == Model.currentPage ? "active" : "")">
+                                                        <a onclick="product.fnProductGridPagination(@i, 'page', this);" aria-controls="DataTables_Table_0" data-dt-idx="@i" tabindex="0" class="page-link">@i</a>
+                                                    </li>
+                                                }
+                                            }
+
+
+                                            <li class="paginate_button page-item next @(Model.ShowNext == true ? "" : "disabled")" id="DataTables_Table_0_next">
+                                                <a onclick="product.fnProductGridPagination(0, 'next', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal to add new user starts-->
+                    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+                        <div class="modal-dialog">
+                            <form class="add-new-user modal-content pt-0" novalidate="novalidate">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                                <div class="modal-header mb-1">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                                </div>
+                                <div class="modal-body flex-grow-1">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
+                                        <input type="text" class="form-control dt-full-name" id="basic-icon-default-fullname" placeholder="John Doe" name="user-fullname">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-uname">Username</label>
+                                        <input type="text" id="basic-icon-default-uname" class="form-control dt-uname" placeholder="Web Developer" name="user-name">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-email">Email</label>
+                                        <input type="text" id="basic-icon-default-email" class="form-control dt-email" placeholder="john.doe@example.com" name="user-email">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-contact">Contact</label>
+                                        <input type="text" id="basic-icon-default-contact" class="form-control dt-contact" placeholder="+1 (609) 933-44-22" name="user-contact">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-company">Company</label>
+                                        <input type="text" id="basic-icon-default-company" class="form-control dt-contact" placeholder="PIXINVENT" name="user-company">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="country">Country</label>
+                                        <div class="position-relative">
+                                            <select id="country" class="select2 form-select select2-hidden-accessible" data-select2-id="country" tabindex="-1" aria-hidden="true">
+                                                <option value="Australia" data-select2-id="2">USA</option>
+                                                <option value="Bangladesh">Bangladesh</option>
+                                                <option value="Belarus">Belarus</option>
+                                                <option value="Brazil">Brazil</option>
+                                                <option value="Canada">Canada</option>
+                                                <option value="China">China</option>
+                                                <option value="France">France</option>
+                                                <option value="Germany">Germany</option>
+                                                <option value="India">India</option>
+                                                <option value="Indonesia">Indonesia</option>
+                                                <option value="Israel">Israel</option>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Japan">Japan</option>
+                                                <option value="Korea">Korea, Republic of</option>
+                                                <option value="Mexico">Mexico</option>
+                                                <option value="Philippines">Philippines</option>
+                                                <option value="Russia">Russian Federation</option>
+                                                <option value="South Africa">South Africa</option>
+                                                <option value="Thailand">Thailand</option>
+                                                <option value="Turkey">Turkey</option>
+                                                <option value="Ukraine">Ukraine</option>
+                                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                                <option value="United Kingdom">United Kingdom</option>
+                                                <option value="United States">United States</option>
+                                            </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-country-container"><span class="select2-selection__rendered" id="select2-country-container" role="textbox" aria-readonly="true" title="USA">USA</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="user-role">User Role</label>
+                                        <div class="position-relative">
+                                            <select id="user-role" class="select2 form-select select2-hidden-accessible" data-select2-id="user-role" tabindex="-1" aria-hidden="true">
+                                                <option value="subscriber" data-select2-id="4">Subscriber</option>
+                                                <option value="editor">Editor</option>
+                                                <option value="maintainer">Maintainer</option>
+                                                <option value="author">Author</option>
+                                                <option value="admin">Admin</option>
+                                            </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="3" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-user-role-container"><span class="select2-selection__rendered" id="select2-user-role-container" role="textbox" aria-readonly="true" title="Subscriber">Subscriber</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label" for="user-plan">Select Plan</label>
+                                        <div class="position-relative">
+                                            <select id="user-plan" class="select2 form-select select2-hidden-accessible" data-select2-id="user-plan" tabindex="-1" aria-hidden="true">
+                                                <option value="basic" data-select2-id="6">Basic</option>
+                                                <option value="enterprise">Enterprise</option>
+                                                <option value="company">Company</option>
+                                                <option value="team">Team</option>
+                                            </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-user-plan-container"><span class="select2-selection__rendered" id="select2-user-plan-container" role="textbox" aria-readonly="true" title="Basic">Basic</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary me-1 data-submit waves-effect waves-float waves-light">Submit</button>
+                                    <button type="reset" class="btn btn-outline-secondary waves-effect" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Modal to add new user Ends-->
+                </div>
+                <!-- list and filter end -->
+            </section>
+            <!-- users list ends -->
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    var pagesize = "@Model.pageSize";
+    $("#ddlPageSize").val(pagesize);
+</script>

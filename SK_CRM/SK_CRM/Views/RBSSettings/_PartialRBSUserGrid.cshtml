@@ -1,0 +1,440 @@
+﻿@model SK_CRM.Models.RBSSettingsModal
+
+
+<table class="user-list-table table dataTable no-footer dtr-column" id="myTable1" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1035px;">
+    
+    <thead class="table-light">
+        <tr role="row">
+            <td>Select All</td>
+            <td><input type="checkbox" name="chkselectall" id="chkselectall" title="Select All" onchange="fnSelectAllRBS();" /></td>
+        </tr>
+        <tr role="row">
+            <th style="display: none;" class="control sorting_disabled" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label="">MenuId</th>
+            <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending">Sl. No# </th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Menu Name</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Sub Menu</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Read</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Add</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Edit</th>
+            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            long ik = 1;
+            foreach (var item in Model.rBSSettingsGrids)
+            {
+                if (ik % 2 == 0)
+                {
+                    if (item.NoofSubMenus > 0)
+                    {
+                        <tr class="even disabled-row">
+                            <td style="display: none;"><input class="hdnRBSMenuId" type="hidden" value="@item.MenuId" /></td>
+                            <td><span class="text-nowrap">@item.RowNumber</span></td>
+
+                            @if (item.IsMainMenu != 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+
+                            @if (item.IsMainMenu == 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+                            @if (item.IsRead)
+                            {
+                                <td><input class="chkread" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkread" type="checkbox" disabled /></td>
+                            }
+
+                            @if (item.IsAdd)
+                            {
+                                <td><input class="chkadd" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkadd" type="checkbox" disabled /></td>
+                            }
+
+                            @if (item.IsEdit)
+                            {
+                                <td><input class="chkedit" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkedit" type="checkbox" disabled /></td>
+                            }
+
+                            @if (item.IsDelete)
+                            {
+                                <td><input class="chkdelete" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkdelete" type="checkbox" disabled /></td>
+                            }
+                        </tr>
+
+                    }
+                    else if (item.MainMenuId > 0)
+                    {
+
+                        <tr class="even sub-menu">
+                            <td style="display: none;"><input class="hdnRBSMenuId" type="hidden" value="@item.MenuId" /></td>
+                            <td><span class="text-nowrap">@item.RowNumber</span></td>
+
+                            @if (item.IsMainMenu != 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+
+                            @if (item.IsMainMenu == 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+                            @if (item.IsRead)
+                            {
+                                <td><input class="chkread" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkread" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsAdd)
+                            {
+                                <td><input class="chkadd" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkadd" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsEdit)
+                            {
+                                <td><input class="chkedit" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkedit" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsDelete)
+                            {
+                                <td><input class="chkdelete" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkdelete" type="checkbox" /></td>
+                            }
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="even direct-menu">
+                            <td style="display: none;"><input class="hdnRBSMenuId" type="hidden" value="@item.MenuId" /></td>
+                            <td><span class="text-nowrap">@item.RowNumber</span></td>
+
+                            @if (item.IsMainMenu != 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+
+                            @if (item.IsMainMenu == 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+                            @if (item.IsRead)
+                            {
+                                <td><input class="chkread" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkread" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsAdd)
+                            {
+                                <td><input class="chkadd" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkadd" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsEdit)
+                            {
+                                <td><input class="chkedit" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkedit" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsDelete)
+                            {
+                                <td><input class="chkdelete" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkdelete" type="checkbox" /></td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    if (item.NoofSubMenus > 0)
+                    {
+                        <tr class="odd disabled-row">
+                            <td style="display: none;"><input class="hdnRBSMenuId" type="hidden" value="@item.MenuId" /></td>
+                            <td><span class="text-nowrap">@item.RowNumber</span></td>
+
+                            @if (item.IsMainMenu != 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+
+                            @if (item.IsMainMenu == 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+                            @if (item.IsRead)
+                            {
+                                <td><input class="chkread" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkread" type="checkbox" disabled /></td>
+                            }
+
+                            @if (item.IsAdd)
+                            {
+                                <td><input class="chkadd" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkadd" type="checkbox" disabled /></td>
+                            }
+
+                            @if (item.IsEdit)
+                            {
+                                <td><input class="chkedit" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkedit" type="checkbox" disabled /></td>
+                            }
+
+                            @if (item.IsDelete)
+                            {
+                                <td><input class="chkdelete" type="checkbox" checked="checked" disabled /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkdelete" type="checkbox" disabled /></td>
+                            }
+                        </tr>
+
+                    }
+                    else if (item.MainMenuId > 0)
+                    {
+
+                        <tr class="odd sub-menu">
+                            <td style="display: none;"><input class="hdnRBSMenuId" type="hidden" value="@item.MenuId" /></td>
+                            <td><span class="text-nowrap">@item.RowNumber</span></td>
+
+                            @if (item.IsMainMenu != 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+
+                            @if (item.IsMainMenu == 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+                            @if (item.IsRead)
+                            {
+                                <td><input class="chkread" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkread" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsAdd)
+                            {
+                                <td><input class="chkadd" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkadd" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsEdit)
+                            {
+                                <td><input class="chkedit" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkedit" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsDelete)
+                            {
+                                <td><input class="chkdelete" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkdelete" type="checkbox" /></td>
+                            }
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="odd direct-menu">
+                            <td style="display: none;"><input class="hdnRBSMenuId" type="hidden" value="@item.MenuId" /></td>
+                            <td><span class="text-nowrap">@item.RowNumber</span></td>
+
+                            @if (item.IsMainMenu != 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+
+                            @if (item.IsMainMenu == 0)
+                            {
+                                <td><span class="text-nowrap">@item.MenuName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="text-nowrap"></span></td>
+                            }
+                            @if (item.IsRead)
+                            {
+                                <td><input class="chkread" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkread" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsAdd)
+                            {
+                                <td><input class="chkadd" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkadd" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsEdit)
+                            {
+                                <td><input class="chkedit" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkedit" type="checkbox" /></td>
+                            }
+
+                            @if (item.IsDelete)
+                            {
+                                <td><input class="chkdelete" type="checkbox" checked="checked" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="chkdelete" type="checkbox" /></td>
+                            }
+                        </tr>
+                    }
+                }
+                ik = ik + 1;
+            }
+        }
+            
+    </tbody>
+</table>
+<div class="d-flex justify-content-between mx-2 row mb-1">
+    <div class="col-sm-12 col-md-6">
+        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @Model.pagefirstNumber to @Model.pageLastNumber of @Model.totalCount entries</div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            <ul class="pagination">
+
+                <li class="paginate_button page-item previous @(Model.ShowPrevious == true ? "" : "disabled")" id="DataTables_Table_0_previous">
+                    <a onclick="RBS.fnUserGridPagination(0, 'prev', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                </li>
+
+                @for (int j = Model.MinPage; j <= Model.MaxPage; j++)
+                {
+                    <li class="paginate_button page-item @(j == Model.currentPage ? "active" : "")">
+                        <a onclick="RBS.fnUserGridPagination(@j, 'page', this);" aria-controls="DataTables_Table_0" data-dt-idx="@j" tabindex="0" class="page-link">@j</a>
+                    </li>
+                }
+
+                <li class="paginate_button page-item next @(Model.ShowNext == true ? "" : "disabled")" id="DataTables_Table_0_next">
+                    <a onclick="RBS.fnUserGridPagination(0, 'next', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<!--Datatable js-->
+<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        //$('#myTable1').DataTable();
+        $(".rainbow-progress").addClass("hide-div");
+    });
+</script>

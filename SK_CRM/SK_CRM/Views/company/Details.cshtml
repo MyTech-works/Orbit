@@ -1,0 +1,155 @@
+﻿@model SK_CRM.Models.company
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AltEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AltEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AltContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AltContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TINNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TINNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GSTINNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GSTINNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuotationHeader)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuotationHeader)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyLogo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyLogo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Watermark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Watermark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GSTDetectionPercentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GSTDetectionPercentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

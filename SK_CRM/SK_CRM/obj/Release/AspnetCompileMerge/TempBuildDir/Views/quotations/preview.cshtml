@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "preview";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+@{
+    Html.RenderAction("_PartialQuotationPreview", "quotations", new { id = Model.QuotationId });
+}

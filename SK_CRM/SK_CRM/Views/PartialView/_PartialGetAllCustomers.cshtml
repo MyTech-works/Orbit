@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SK_CRM.Models.customer>
+
+@{
+    
+    <select id="BilledToCustomerId" class="select2 form-select">
+        <option value="">Select Company</option>
+        @foreach (var item in Model)
+        {
+            <option value="@item.CustomerId">@item.CustomerName</option>
+        }
+    </select>
+}
+@*<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="~/admin-assets/js/scripts/pages/app-invoice.min.js"></script>*@
+@*<script>
+        $((function () {
+            "use strict";
+            var p = $(".invoiceto");
+
+            $(document).on("click", ".add-new-customer", (function () {
+                p.select2("close")
+            }
+            )),
+                p.length && (p.select2({
+                    placeholder: "Select Customer",
+                    dropdownParent: $(".invoice-customer")
+                }),
+                    p.on("change", (function () {
+                        var e = $(this)
+                            , t = '<div class="customer-details mt-1"><p class="mb-25">' + f[e.val()].name + '</p><p class="mb-25">' + f[e.val()].company + '</p><p class="mb-25">' + f[e.val()].address + '</p><p class="mb-25">' + f[e.val()].country + '</p><p class="mb-0">' + f[e.val()].tel + '</p><p class="mb-0">' + f[e.val()].email + "</p></div>";
+                        $(".row-bill-to").find(".customer-details").remove(),
+                            $(".row-bill-to").find(".col-bill-to").append(t)
+                    }
+                    )),
+                    p.on("select2:open", (function () {
+                        $(document).find(".add-new-customer").length || $(document).find(".select2-results__options").before('<div class="add-new-customer btn btn-flat-success cursor-pointer rounded-0 text-start mb-50 p-50 w-100" data-bs-toggle="modal" data-bs-target="#add-new-customer-sidebar">' + feather.icons.plus.toSvg({
+                            class: "font-medium-1 me-50"
+                        }) + '<span class="align-middle">Add New Customer</span></div>')
+                    }
+                    )))
+        }
+        ));
+
+    </script>*@

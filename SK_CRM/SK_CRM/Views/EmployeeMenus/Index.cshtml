@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+@{
+    Html.RenderAction("_PartialGetAllEmployeeMenus", "EmployeeMenus");
+}

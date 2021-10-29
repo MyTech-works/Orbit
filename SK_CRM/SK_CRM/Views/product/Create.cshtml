@@ -1,0 +1,188 @@
+﻿@model SK_CRM.Models.ProductDetails
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- Horizontal Wizard -->
+        <section class="horizontal-wizard">
+            <div class="bs-stepper horizontal-wizard-example">
+                <div class="bs-stepper-header" role="tablist">
+                    <div class="step active" data-target="#account-details" role="tab" id="account-details-trigger">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">1</span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Product Details</span>
+                                <span class="bs-stepper-subtitle">Setup Product Details</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="line">
+                        <i data-feather="chevron-right" class="font-medium-2"></i>
+                    </div>
+                   
+                    <div class="step" data-target="#social-links" role="tab" id="social-links-trigger">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">2</span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Description</span>
+                                <span class="bs-stepper-subtitle">Add Detailed Description</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bs-stepper-content">
+                  
+                    <div id="account-details" class="content active dstepper-block" role="tabpanel" aria-labelledby="account-details-trigger">
+                        <div class="content-header">
+                            <h5 class="mb-0">Product Details</h5>
+                            <small class="text-muted">Enter Your Product Details.</small>
+                        </div>
+                        @Html.HiddenFor(model => model.Id)
+                        <form>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+                                    @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "", @placeholder = "Enter Product Name" } })
+                                </div>
+                                <div class="mb-1 col-md-6">
+                                    @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Product Name" } })
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label" })
+                                    @* @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Short Description" } })*@
+                                    <textarea name="Description"
+                                              id="Description"
+                                              class="form-control"
+                                              placeholder="Description"></textarea>
+                                </div>
+                                <div class="mb-1 col-md-6">
+                                    @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control", @placeholder = "0.00" } })
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+
+                                    @Html.LabelFor(model => model.BalanceStockQty, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.BalanceStockQty, new { htmlAttributes = new { @class = "form-control", @placeholder = "0.00" } })
+                                </div>
+                                <div class="mb-1 col-md-6">
+                                    @Html.LabelFor(model => model.IsNotActive, htmlAttributes: new { @class = "form-check-label" })
+                                    @Html.CheckBoxFor(model => model.IsNotActive, new { htmlAttributes = new { @class = "form-check-input", @placeholder = "0.00" } })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+                                    <input type="file" class="form-label custom-file-input" id="imgProductImage" name="file" aria-describedby="inputGroupFileAddon04" multiple="multiple">
+                                    <label class="custom-file-label" for="inputGroupFile04">Choose Image</label>
+
+                                </div>
+                                <div class="mb-1 col-md-6">
+                                    <input id="ProductImage" type="hidden" name="ProductImage[]" />
+                                    <div id="dvPreview" class="tg-fileuploadlabel">  </div>
+
+                                </div>
+
+                            </div>
+                        </form>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-outline-secondary btn-prev" disabled>
+                                <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
+                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                            </button>
+                            <button class="btn btn-primary btn-next" id="btnProductNext" style="display:none;">
+                                <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                <i data-feather="arrow-right" class="align-middle ms-sm-25 ms-0"></i>
+                            </button>
+                            <button class="btn btn-primary btn-next-validate" onclick="product.fnProductNextButtonValidation();">
+                                <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                <i data-feather="arrow-right" class="align-middle ms-sm-25 ms-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="social-links" class="content" role="tabpanel" aria-labelledby="social-links-trigger">
+                        <div class="content-header">
+                            <h5 class="mb-0">Detailed Description</h5>
+                            <small>Enter Detailed Description</small>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <div class="mb-1 col-md-12">
+                                    @Html.TextAreaFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+
+                            </div>
+
+                        </form>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-prev">
+                                <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
+                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                            </button>
+                            <button class="btn btn-success" type="button" onclick="product.fnSaveProduct();" id="btnSave"><i class="fa fa-spinner fa-spin hide-spinner"></i>Submit</button>
+                        </div>
+                    </div>
+
+                    <script>
+                        CKEDITOR.replace('ProductDescription');
+                    </script>
+                    @*}*@
+                </div>
+
+            </div>
+        </section>
+        <!-- /Horizontal Wizard -->
+    </div>
+
+</div>
+
+<input id="Image" type="hidden" name="Image[]" />
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $("#imgProductImage").change(function () {
+            debugger
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#dvPreview");
+                var regex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var img = $("<img />");
+                            img.attr("style", "height:100px;width: 100px");
+                            img.attr("src", e.target.result);
+                            dvPreview.append(img);
+                            $("#ProductImage").val(file[0].name);
+                            common.commonupload(e.target.result, "Product", "ProductImage");
+                        }
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        alert(file[0].name + " is not a valid image file.");
+                        dvPreview.html("");
+                        return false;
+                    }
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+    });
+</script>

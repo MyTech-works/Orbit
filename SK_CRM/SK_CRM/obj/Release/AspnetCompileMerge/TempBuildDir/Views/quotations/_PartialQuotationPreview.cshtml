@@ -1,0 +1,458 @@
+﻿@model SK_CRM.Models.AggregateModel.quotationpreviewModel
+
+@{
+
+    string contactnumbers = "";
+    string emailaddress = "";
+    string TINGSTNumber = "";
+    if (!string.IsNullOrWhiteSpace(Model.company.ContactNumber))
+    {
+        contactnumbers = Model.company.ContactNumber;
+    }
+    if (contactnumbers != "")
+    {
+        if (!string.IsNullOrWhiteSpace(Model.company.AltContactNumber))
+        {
+            contactnumbers = contactnumbers + " | " + Model.company.ContactNumber;
+        }
+    }
+    else
+    {
+        contactnumbers = Model.company.ContactNumber;
+    }
+
+    if (!string.IsNullOrWhiteSpace(Model.company.Email))
+    {
+        emailaddress = Model.company.Email;
+    }
+    if (emailaddress != "")
+    {
+        if (!string.IsNullOrWhiteSpace(Model.company.AltEmail))
+        {
+            emailaddress = emailaddress + " | " + Model.company.AltEmail;
+        }
+    }
+    else
+    {
+        emailaddress = Model.company.AltEmail;
+    }
+
+    if (!string.IsNullOrWhiteSpace(Model.company.TINNumber))
+    {
+        TINGSTNumber = "TIN: " + Model.company.TINNumber;
+    }
+    if (TINGSTNumber != "")
+    {
+        if (!string.IsNullOrWhiteSpace(Model.company.GSTINNumber))
+        {
+            TINGSTNumber = TINGSTNumber + " | GSTIN: " + Model.company.GSTINNumber;
+        }
+    }
+    else
+    {
+        TINGSTNumber = "GSTIN: " + Model.company.GSTINNumber;
+    }
+
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="invoice-preview-wrapper" id="divQuotation">
+                <div class="row invoice-preview">
+                    <!-- Invoice -->
+                    <div class="col-xl-12 col-md-8 col-12">
+                        <div class="card invoice-preview-card">
+                            <div class="card-body invoice-padding pb-0">
+                                <!-- Header starts -->
+                                <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0 row" style="margin-bottom:0px;">
+                                    <div class="col-md-6" style="margin-bottom: 0; margin-top: 2rem;">
+                                        <div class="logo-wrapper">
+
+                                            <h3 class="text-primary">@Model.company.CompanyName</h3>
+                                        </div>
+                                        <p class="card-text mb-25" id="address"></p>
+                                        @if (emailaddress != "")
+                                        {
+                                            <p class="card-text mb-25" id="emailaddress">@emailaddress</p>
+                                        }
+
+                                        @if (contactnumbers != "")
+                                        {
+                                            <p class="card-text mb-0"><b>Mob: </b>@contactnumbers</p>
+                                        }
+
+                                        @if (Model.company.Website != "")
+                                        {
+                                            <p class="card-text mb-0">@Model.company.Website</p>
+                                        }
+
+
+
+                                        @if (TINGSTNumber != "")
+                                        {
+                                            <p class="card-text mb-0">@TINGSTNumber</p>
+                                        }
+
+                                    </div>
+                                    <div class="mt-md-0 mt-2 col-md-6">
+                                        <div class="invoice-date-wrapper" style="float: right;">
+                                            <img alt="Logo" src="@Model.company.CompanyLogo" style="max-width: 300px; opacity: 0.5;" />
+                                        </div>
+                                        <div style="text-align: left; float: right;" class="logo-wrapper">
+
+
+                                            <div>
+                                                <h3 class="text-primary invoice-logo">@Model.company.QuotationHeader</h3>
+                                                <div class="invoice-date-wrapper">
+                                                    <p class="invoice-date-title">Quotation No:</p>
+                                                    <p class="invoice-date">@Model.quotation.QuotationNo</p>
+                                                </div>
+                                                <div class="invoice-date-wrapper">
+                                                    <p class="invoice-date-title">Date Issued:</p>
+                                                    <p class="invoice-date">@Model.quotation.QuotationDate.ToString("MMM dd, yyyy")</p>
+                                                </div>
+                                                <div class="invoice-date-wrapper">
+                                                    <p class="invoice-date-title">Due Date:</p>
+                                                    <p class="invoice-date">@Model.quotation.QuotationDueDate.ToString("MMM dd, yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- Header ends -->
+                            </div>
+
+                            <hr class="invoice-spacing" />
+
+                            <!-- Address and Contact starts -->
+                            <div class="card-body invoice-padding pt-0">
+                                <div class="row invoice-spacing" style="margin-bottom: 0px; margin-top: 0px;">
+                                    <div class="col-xl-6 p-0">
+                                        <h6 class="mb-2">Billing To:</h6>
+                                        <h6 class="mb-25">@Model.customer.CustomerName</h6>
+                                        <p class="card-text mb-25" id="customeraddress">@Model.customer.CustomerAddress</p>
+                                        <p class="card-text mb-25">@Model.customer.ContactNumber</p>
+                                        <p class="card-text mb-0">@Model.customer.CustomerEmail</p>
+                                    </div>
+                                    @if (Model.quotation.RefPersonId != 0 && Model.quotation.RefPersonId != null)
+                                    {
+                                        <div class="col-xl-6 p-0">
+                                            <h6 class="mb-2">Ref Person:</h6>
+                                            <h6 class="mb-25">@Model.refPerson.CustomerName</h6>
+                                            <p class="card-text mb-25" id="customeraddressref">@Model.refPerson.CustomerAddress</p>
+                                            <p class="card-text mb-25">@Model.refPerson.ContactNumber</p>
+                                            <p class="card-text mb-0">@Model.refPerson.CustomerEmail</p>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                            <!-- Address and Contact ends -->
+                            <!-- Invoice Description starts -->
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="py-1">Sl.No.</th>
+                                            <th class="py-1">Image</th>
+                                            <th class="py-1">Desc.</th>
+                                            <th class="py-1">Quantity</th>
+                                            <th class="py-1">Price</th>
+                                            <th class="py-1">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int i = 0;
+                                            foreach (var item in Model.quotationProducts)
+                                            {
+                                                i = i + 1;
+                                                string serialno = i < 10 ? "0" + i : i.ToString();
+                                                var product = Model.productDetails.Where(x => x.Id == item.ProductId).FirstOrDefault();
+                                                var upload = Model.uploads.Where(x => x.RefId == product.Id).FirstOrDefault();
+                                                if (product != null)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <span>@serialno</span>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            @if (upload != null)
+                                                            {
+                                                                <img src="@upload.ImagePath" style="max-width: 100px;" onerror="this.onerror=null;this.src='default-image.jpg';" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="@upload.ImagePath" style="max-width: 100px;" />
+                                                            }
+
+                                                        </td>
+                                                        <td class="py-1" style="max-width: 300px;">
+                                                            <p class="card-text fw-bold mb-25"><u><b>@product.ProductName</b></u></p>
+                                                            <p class="card-text text-nowrap">
+                                                                @Html.Raw(product.ProductDescription)
+                                                            </p>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <span class="fw-bold">@item.Quantity</span>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <span class="fw-bold">₹@item.UnitPrice</span>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <span class="fw-bold">₹@item.TotalPrice</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            @{
+                                decimal totalamount = Model.quotationProducts.Sum(x => x.TotalPrice);
+                                decimal taxtds = Model.company.GSTDetectionPercentage;
+                                decimal taxdetaction = ((totalamount * taxtds) / 100);
+                                decimal finalamount = totalamount + taxdetaction;
+
+                                <div class="card-body invoice-padding pb-0">
+                                    <div class="row invoice-sales-total-wrapper">
+                                        <div class="col-md-4 order-md-1 order-2 mt-md-0 mt-3">
+
+                                        </div>
+                                        <div class="col-md-8 d-flex justify-content-end order-md-2 order-1">
+                                            <div class="invoice-total-wrapper" style="max-width: 50%;">
+                                                <div class="invoice-total-item">
+                                                    <p class="invoice-total-title">Subtotal:</p>
+                                                    <p class="invoice-total-amount">$ @Model.quotationProducts.Sum(x => x.TotalPrice) </p>
+                                                </div>
+                                                <div class="invoice-total-item">
+                                                    <p class="invoice-total-title">Tax:</p>
+                                                    <p class="invoice-total-amount">@Model.company.GSTDetectionPercentage%</p>
+                                                </div>
+                                                <div class="invoice-total-item">
+                                                    <p class="invoice-total-title">Tax Amount:</p>
+                                                    <p class="invoice-total-amount">$ @taxdetaction.ToString("0.00")</p>
+                                                </div>
+
+                                                <hr class="my-50" />
+                                                <div class="invoice-total-item">
+                                                    <p class="invoice-total-title">Total:</p>
+                                                    <p class="invoice-total-amount">$ @finalamount.ToString("0.00")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Invoice Description ends -->
+
+                            <hr class="invoice-spacing" />
+
+                            <!-- Invoice Note starts -->
+                            <div class="card-body invoice-padding pt-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>Orbit Machines– Industrial & Recycling Machines Manufacturer</h3>
+                                        <hr>
+                                        <span><b>Orbit</b> stands out in terms of experience and expertise when it comes to crushing, shredding, and dewatering equipment. We are able to offer complete crushing, shredding, conveying, wire stripping, and dewatering systems.</span>
+                                        <br /> <br />
+                                        <span><b>We will be happy to supply any further information you may need and trust that you call on us to fill your order, which will receive our prompt and careful attention.</b></span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body invoice-padding pt-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4><u>Terms & Conditions</u></h4>
+                                        <table class="table-responsive" style="width: 100%;">
+                                            <tbody>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>Tax	</b></td>
+                                                    <td class="col-md-8"><b>:<span style="margin-left: 50px;">GST 18%</span></b> </td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>PACKING & FORWAD	</b></td>
+                                                    <td class="col-md-8"><b>:<span style="margin-left: 50px;">Ex-works, Coimbatore</span> </b> </td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>PAYMENT	</b></td>
+                                                    <td class="col-md-8"><b>:<span style="margin-left: 50px;">50% Advance, Balance Against material dispatch</span></b> </td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>VALIDITY OFFER	</b></td>
+                                                    <td class="col-md-8"><b>:<span style="margin-left: 50px;">15 Days</span></b> </td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>DELIVERY	</b></td>
+                                                    <td class="col-md-8">
+                                                        <b>
+                                                            :<span style="margin-left: 50px;">material will be dispatched within 30 to 35 working days from advance payment
+                                                            </span>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>WARRANTY	</b></td>
+                                                    <td class="col-md-8"><b>:<span style="margin-left: 50px;">1 year machine warranty from the invoice date. </span></b> </td>
+                                                </tr>
+                                                <tr class="row">
+                                                    <td class="col-md-4"><b>INSTLATION & COMMISSIONING</b></td>
+                                                    <td class="col-md-8"><b>:<span style="margin-left: 50px;">Travelling and accommodation will be at your scope</span></b> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Invoice Note ends -->
+                        </div>
+                    </div>
+                    <!-- /Invoice -->
+                    <!-- Invoice Actions -->
+                    <div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="btn btn-primary w-100 mb-75" onclick="quotation.fnGenerateQuotation(@Model.quotation.QuotationId);">
+                                    Download
+                                </button>
+                                <a class="btn btn-outline-secondary w-100 mb-75" href="#" onclick="quotation.fnGenerateQuotationPrint(@Model.quotation.QuotationId);" target="_blank"> Print </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Invoice Actions -->
+                </div>
+            </section>
+
+            <!-- Send Invoice Sidebar -->
+            <div class="modal modal-slide-in fade" id="send-invoice-sidebar" aria-hidden="true">
+                <div class="modal-dialog sidebar-lg">
+                    <div class="modal-content p-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title">
+                                <span class="align-middle">Send Invoice</span>
+                            </h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <form>
+                                <div class="mb-1">
+                                    <label for="invoice-from" class="form-label">From</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="invoice-from"
+                                           value="shelbyComapny@email.com"
+                                           placeholder="company@email.com" />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="invoice-to" class="form-label">To</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="invoice-to"
+                                           value="qConsolidated@email.com"
+                                           placeholder="company@email.com" />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="invoice-subject" class="form-label">Subject</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="invoice-subject"
+                                           value="Invoice of purchased Admin Templates"
+                                           placeholder="Invoice regarding goods" />
+                                </div>
+                                <div class="mb-1">
+                                    <label for="invoice-message" class="form-label">Message</label>
+                                    <textarea class="form-control"
+                                              name="invoice-message"
+                                              id="invoice-message"
+                                              cols="3"
+                                              rows="11"
+                                              placeholder="Message...">
+Dear Queen Consolidated,
+
+Thank you for your business, always a pleasure to work with you!
+
+We have generated a new invoice in the amount of $95.59
+
+We would appreciate payment of this invoice by 05/11/2019</textarea>
+                                </div>
+                                <div class="mb-1">
+                                    <span class="badge badge-light-primary">
+                                        <i data-feather="link" class="me-25"></i>
+                                        <span class="align-middle">Invoice Attached</span>
+                                    </span>
+                                </div>
+                                <div class="mb-1 d-flex flex-wrap mt-2">
+                                    <button type="button" class="btn btn-primary me-1" data-bs-dismiss="modal">Send</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Send Invoice Sidebar -->
+            <!-- Add Payment Sidebar -->
+            <div class="modal modal-slide-in fade" id="add-payment-sidebar" aria-hidden="true">
+                <div class="modal-dialog sidebar-lg">
+                    <div class="modal-content p-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title">
+                                <span class="align-middle">Add Payment</span>
+                            </h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <form>
+                                <div class="mb-1">
+                                    <input id="balance" class="form-control" type="text" value="Invoice Balance: 5000.00" disabled />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="amount">Payment Amount</label>
+                                    <input id="amount" class="form-control" type="number" placeholder="$1000" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="payment-date">Payment Date</label>
+                                    <input id="payment-date" class="form-control date-picker" type="text" />
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="payment-method">Payment Method</label>
+                                    <select class="form-select" id="payment-method">
+                                        <option value="" selected disabled>Select payment method</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                        <option value="Debit">Debit</option>
+                                        <option value="Credit">Credit</option>
+                                        <option value="Paypal">Paypal</option>
+                                    </select>
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="payment-note">Internal Payment Note</label>
+                                    <textarea class="form-control" id="payment-note" rows="5" placeholder="Internal Payment Note"></textarea>
+                                </div>
+                                <div class="d-flex flex-wrap mb-0">
+                                    <button type="button" class="btn btn-primary me-1" data-bs-dismiss="modal">Send</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Add Payment Sidebar -->
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+    <script>
+    var htmlcontent = "@Model.company.Address";
+    htmlcontent = $.parseHTML(htmlcontent);
+        $("#address").append(htmlcontent);
+    </script>
+
+}

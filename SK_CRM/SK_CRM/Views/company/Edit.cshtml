@@ -1,0 +1,284 @@
+﻿@model SK_CRM.Models.company
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- Horizontal Wizard -->
+        <section class="horizontal-wizard">
+            <div class="bs-stepper horizontal-wizard-example">
+                <div class="bs-stepper-header" role="tablist">
+                    <div class="step active" data-target="#account-details" role="tab" id="account-details-trigger">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">1</span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Company Details</span>
+                                <span class="bs-stepper-subtitle">Setup Company Details</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="line">
+                        <i data-feather="chevron-right" class="font-medium-2"></i>
+                    </div>
+
+                    <div class="step" data-target="#social-links" role="tab" id="social-links-trigger">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">2</span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Other Detail</span>
+                                <span class="bs-stepper-subtitle">Add Other Detail</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bs-stepper-content">
+
+                    <div id="account-details" class="content active dstepper-block" role="tabpanel" aria-labelledby="account-details-trigger">
+                        <div class="content-header">
+                            <h5 class="mb-0">Company Details</h5>
+                            <small class="text-muted">Enter Your Company Details.</small>
+                        </div>
+                        @Html.HiddenFor(model => model.CompanyId)
+                    <form>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.CompanyCode, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.CompanyCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "", @disabled = "disabled" } })
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Company Name" } })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label" })
+                                @* @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Short Description" } })*@
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.Locality, htmlAttributes: new { @class = "form-label" })
+                                @* @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Short Description" } })*@
+                                @Html.EditorFor(model => model.Locality, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @placeholder = "website.com" } })
+
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.Pincode, htmlAttributes: new { @class = "form-label" })
+                                @* @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Short Description" } })*@
+                                @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.Website, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control", @placeholder = "website.com" } })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "email@123.com" } })
+                            </div>
+                            <div class="mb-1 col-md-6">
+
+                                @Html.LabelFor(model => model.AltEmail, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.AltEmail, new { htmlAttributes = new { @class = "form-control", @placeholder = "email@123.com" } })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+
+                                @Html.LabelFor(model => model.ContactNumber, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Contact No" } })
+                            </div>
+                            <div class="mb-1 col-md-6">
+
+                                @Html.LabelFor(model => model.AltContactNumber, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.AltContactNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Alt. Cont. No" } })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+                                <input type="file" class="form-label custom-file-input" id="imgCompanyLogo" name="file" aria-describedby="inputGroupFileAddon04" multiple="multiple">
+                                <label class="custom-file-label" for="inputGroupFile04">Company Logo</label>
+
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                <input id="CompanyLogo" type="hidden" name="CompanyLogo[]" />
+                                <div id="dvPreview" class="tg-fileuploadlabel">  </div>
+                                @if (!string.IsNullOrWhiteSpace(Model.CompanyLogo))
+                                {
+                                    <img src="@Model.CompanyLogo" style="height:100px;width: 100px" alt="image" />
+                                }
+                            </div>
+
+                        </div>
+                    </form>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-outline-secondary btn-prev" disabled>
+                                <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
+                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                            </button>
+                            <button class="btn btn-primary btn-next" id="btnCompanyNext" style="display:none;">
+                                <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                <i data-feather="arrow-right" class="align-middle ms-sm-25 ms-0"></i>
+                            </button>
+                            <button class="btn btn-primary btn-next-validate" onclick="company.fnCompanyUpdateNextButtonValidation();">
+                                <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                <i data-feather="arrow-right" class="align-middle ms-sm-25 ms-0"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="social-links" class="content" role="tabpanel" aria-labelledby="social-links-trigger">
+                        <div class="content-header">
+                            <h5 class="mb-0">Detailed Description</h5>
+                            <small>Enter Detailed Description</small>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+
+                                    @Html.LabelFor(model => model.QuotationHeader, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.QuotationHeader, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Quotation Name" } })
+                                </div>
+                                <div class="mb-1 col-md-6">
+
+                                    @Html.LabelFor(model => model.TINNumber, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.TINNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter TIN No" } })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+
+                                    @Html.LabelFor(model => model.GSTINNumber, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.GSTINNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter GST No" } })
+                                </div>
+                                <div class="mb-1 col-md-6">
+
+                                    @Html.LabelFor(model => model.GSTDetectionPercentage, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.GSTDetectionPercentage, new { htmlAttributes = new { @class = "form-control", @placeholder = "0.00" } })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-1 col-md-6">
+                                    <input type="file" class="form-label custom-file-input" id="imgWatermark" name="file" aria-describedby="inputGroupFileAddon04">
+                                    <label class="custom-file-label" for="inputGroupFile05">Watermark</label>
+
+                                </div>
+                                <div class="mb-1 col-md-6">
+                                    <input id="Watermark" type="hidden" name="Watermark" />
+                                    <div id="dvPreviewWatermark" class="tg-fileuploadlabel">  </div>
+                                    @if (!string.IsNullOrWhiteSpace(Model.Watermark))
+                                    {
+                                        <img src="@Model.Watermark" style="height:100px;width: 100px" alt="image" />
+                                    }
+
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-prev">
+                                <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
+                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                            </button>
+                            <button class="btn btn-success" type="button"  onclick="company.fnUpdateCompany();" id="btnCompanySave"><i class="fa fa-spinner fa-spin hide-spinner"></i>Submit</button>
+                        </div>
+                    </div>
+
+                    @*}*@
+                </div>
+
+            </div>
+        </section>
+        <!-- /Horizontal Wizard -->
+    </div>
+
+</div>
+
+<input id="Image" type="hidden" name="Image[]" />
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<script language="javascript" type="text/javascript">
+
+    $("#Address").val("@Model.Address");
+    $(function () {
+        $("#imgCompanyLogo").change(function () {
+            debugger
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#dvPreview");
+                var regex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var img = $("<img />");
+                            img.attr("style", "height:100px;width: 100px");
+                            img.attr("src", e.target.result);
+                            dvPreview.append(img);
+                            $("#CompanyLogo").val(file[0].name);
+                            common.commonupload(e.target.result, "Company", "CompanyLogo");
+                        }
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        alert(file[0].name + " is not a valid image file.");
+                        dvPreview.html("");
+                        return false;
+                    }
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+    });
+
+    $(function () {
+        $("#imgWatermark").change(function () {
+            debugger
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#dvPreviewWatermark");
+                var regex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var img = $("<img />");
+                            img.attr("style", "height:100px;width: 100px");
+                            img.attr("src", e.target.result);
+                            dvPreview.append(img);
+                            $("#Watermark").val(file[0].name);
+                            common.commonupload(e.target.result, "Company", "Watermark");
+                        }
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        alert(file[0].name + " is not a valid image file.");
+                        dvPreview.html("");
+                        return false;
+                    }
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+    });
+</script>

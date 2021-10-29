@@ -1,0 +1,147 @@
+﻿@model SK_CRM.Models.AggregateModel.Company.AllCompanysModel
+
+@{
+
+    <table class="user-list-table table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1035px;">
+        <thead class="table-light">
+            <tr role="row">
+                <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label=""></th>
+                <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending">Code</th>
+                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Name</th>
+                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Website</th>
+                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Email</th>
+                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Contact No.</th>
+                <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.companies)
+            {
+                int i = item.CompanyId;
+                if (i % 2 == 0)
+                {
+                    <tr class="even">
+                        <td class=" control" tabindex="0" style="display: none;">
+                            <input type="hidden" value="@item.CompanyId" class="hdnRefId" />
+                        </td>
+                        <td class="sorting_1">
+                            <div class="d-flex justify-content-left align-items-center">
+                                <div class="avatar-wrapper">
+                                    @if (string.IsNullOrWhiteSpace(item.CompanyLogo))
+                                    {
+                                        <div class="avatar bg-light-dark me-1">
+                                            <span class="avatar-content">NA</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="avatar  me-1">
+                                            <img src="@item.CompanyLogo" alt="Avatar" height="32" width="32">
+                                        </div>
+                                    }
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                        <span class="fw-bolder">@item.CompanyCode</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="text-nowrap">@item.CompanyName</span></td>
+                        <td><span class="text-nowrap limit-charcters">@item.Website</span></td>
+                        <td><span class="text-nowrap">@item.Email</span></td>
+                        <td><span class="text-nowrap">@item.ContactNumber</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-icon" data-bs-toggle="modal" data-bs-target="#editPermissionModal" style="float: left;" onclick="location.href='@Url.Action("edit", "company", new { id = item.CompanyId })'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-medium-2 text-body">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="btn btn-sm btn-icon delete-record" onclick="location.href='@Url.Action("delete", "company", new { id = item.CompanyId })'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-medium-2 text-body">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="odd">
+                        <td class=" control" tabindex="0" style="display: none;">
+                            <input type="hidden" value="@item.CompanyId" class="hdnRefId" />
+                        </td>
+                        <td class="sorting_1">
+                            <div class="d-flex justify-content-left align-items-center">
+                                <div class="avatar-wrapper">
+                                    @if (string.IsNullOrWhiteSpace(item.CompanyLogo))
+                                    {
+                                        <div class="avatar bg-light-dark me-1">
+                                            <span class="avatar-content">NA</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="avatar  me-1">
+                                            <img src="@item.CompanyLogo" alt="Avatar" height="32" width="32">
+                                        </div>
+                                    }
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                        <span class="fw-bolder">@item.CompanyCode</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="text-nowrap">@item.CompanyName</span></td>
+                        <td><span class="text-nowrap limit-charcters">@item.Website</span></td>
+                        <td><span class="text-nowrap">@item.Email</span></td>
+                        <td><span class="text-nowrap">@item.ContactNumber</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-icon" data-bs-toggle="modal" data-bs-target="#editPermissionModal" style="float: left;" onclick="location.href='@Url.Action("edit", "company", new { id = item.CompanyId })'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-medium-2 text-body"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="btn btn-sm btn-icon delete-record" onclick="location.href='@Url.Action("delete", "company", new { id = item.CompanyId })'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-medium-2 text-body"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between mx-2 row mb-1">
+        <div class="col-sm-12 col-md-6">
+            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @Model.pagefirstNumber to @Model.pageLastNumber of @Model.totalCount entries</div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                <ul class="pagination">
+
+                    <li class="paginate_button page-item previous @(Model.ShowPrevious == true ? "" : "disabled")" id="DataTables_Table_0_previous">
+                        <a onclick="company.fnCompanyGridPagination(0, 'prev', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                    </li>
+
+                    @for (int i = Model.MinPage; i <= Model.MaxPage; i++)
+                    {
+                        <li class="paginate_button page-item @(i == Model.currentPage ? "active" : "")">
+                            <a onclick="company.fnCompanyGridPagination(@i, 'page', this);" aria-controls="DataTables_Table_0" data-dt-idx="@i" tabindex="0" class="page-link">@i</a>
+                        </li>
+                    }
+
+                    <li class="paginate_button page-item next @(Model.ShowNext == true ? "" : "disabled")" id="DataTables_Table_0_next">
+                        <a onclick="company.fnCompanyGridPagination(0, 'next', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>

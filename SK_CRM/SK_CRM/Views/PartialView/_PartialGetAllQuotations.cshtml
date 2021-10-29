@@ -1,0 +1,304 @@
+﻿@model SK_CRM.Models.AggregateModel.QuotationModel
+
+
+@{
+
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <!-- users list start -->
+            <section class="app-user-list">
+
+                <!-- list and filter start -->
+                <div class="card">
+
+                    <div class="card-datatable table-responsive pt-0">
+                        <div id="DataTables_Table_0_wrapper" style="min-height:500px;" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="d-flex justify-content-between align-items-center header-actions mx-2 row mt-75">
+                                <div class="col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start">
+                                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        <label>
+                                            Show
+                                            <select onchange="quotation.fnQuotationGridPagination(0, 'pagesize', this);" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="ddlPageSize" class="form-select">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries
+                                        </label>
+                                    </div>
+                                </div><div class="col-sm-12 col-lg-8 ps-xl-75 ps-0">
+                                    <div class="dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap">
+                                        <div class="me-1">
+                                            <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0" id="txtSearchValue" onkeyup="quotation.fnQuotationGridPagination(1, 'search', this);"></label>
+                                            </div>
+                                        </div>
+                                        <div class="dt-buttons d-inline-flex mt-50">
+                                            @*<button class="dt-button buttons-collection btn btn-outline-secondary dropdown-toggle me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true">
+                                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link font-small-4 me-50"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Export</span>
+                                                </button>*@
+                                            <button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
+                                                    type="button" data-bs-toggle="modal" data-bs-target="#" onclick="location.href='@Url.Action("create", "quotations")'">
+                                                <span>Add New Quotation</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="user-list-table table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1035px;">
+                                <thead class="table-light">
+                                    <tr role="row">
+                                        <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label=""></th>
+                                        <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending">Quot. No</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Quot. Date</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Quot. DueDate</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">BilledBy</th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">BilledTo</th>
+                                        <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.quotations)
+                                    {
+                                        var company = Model.companies.Where(x => x.CompanyId == item.BilledByCompanyId).FirstOrDefault();
+                                        var customer = Model.customers.Where(x => x.CustomerId == item.BilledToCustomerId).FirstOrDefault();
+                                        int i = item.QuotationId;
+                                        if (i % 2 == 0)
+                                        {
+                                            <tr class="even">
+                                                <td class=" control" tabindex="0" style="display: none;">
+                                                    <input type="hidden" value="@item.QuotationId" class="hdnRefId" />
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <div class="d-flex justify-content-left align-items-center">
+
+                                                        <div class="d-flex flex-column">
+                                                            <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                                                <span class="fw-bolder">@item.QuotationNo</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="text-nowrap">@item.QuotationDate.ToString("MMM dd yyyy")</span></td>
+                                                <td><span class="text-nowrap limit-charcters">@item.QuotationDueDate.ToString("MMM dd yyyy")</span></td>
+                                                <td><span class="text-nowrap">@company.CompanyName</span></td>
+                                                <td><span class="text-nowrap">@customer.CustomerName</span></td>
+                                                @*<td>
+                                                        <button class="btn btn-sm btn-icon" data-bs-toggle="modal" data-bs-target="#editPermissionModal" style="float: left;" onclick="location.href='@Url.Action("edit", "quotations", new { id = item.QuotationId })'">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-medium-2 text-body">
+                                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                            </svg>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-icon delete-record" onclick="location.href='@Url.Action("delete", "quotations", new { id = item.QuotationId })'">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-medium-2 text-body">
+                                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                            </svg>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-icon " onclick="location.href='@Url.Action("preview", "quotations", new { id = item.QuotationId })'">
+                                                            <i data-feather='eye'></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-icon " onclick="quotation.fnGenerateQuotation(@item.QuotationId);">
+                                                            <i data-feather='download-cloud'></i>
+                                                        </button>
+
+                                                    </td>*@
+
+                                                <td>
+                                                    <div class="d-flex align-items-center col-actions">
+
+                                                        <a class="me-1" href="#" onclick="quotation.fnGenerateQuotationPrint(@item.QuotationId, this, '@item.QuotationPath');" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Print" aria-label="Send Mail">
+                                                            <i class="fa fa-print"></i>
+                                                        </a>
+                                                        <a class="me-1" href="#" onclick="quotation.fnGenerateQuotationPrint(@item.QuotationId, this, '@item.QuotationPath');" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Print" aria-label="Send Mail">
+                                                            <i data-feather='mail'></i>
+                                                        </a>
+                                                        <a class="me-25" href="#" onclick="location.href='@Url.Action("preview", "quotations", new { id = item.QuotationId })'" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Preview Quotation" aria-label="Preview Quotation">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye font-medium-2 text-body">
+                                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                <circle cx="12" cy="12" r="3"></circle>
+                                                            </svg>
+                                                        </a>
+
+                                                        <div class="dropdown">
+                                                            <a class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical font-medium-2 text-body">
+                                                                    <circle cx="12" cy="12" r="1"></circle>
+                                                                    <circle cx="12" cy="5" r="1"></circle>
+                                                                    <circle cx="12" cy="19" r="1"></circle>
+                                                                </svg>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end" style="">
+                                                                <a href="#" class="dropdown-item" onclick="quotation.fnGenerateQuotation(@item.QuotationId, this, '@item.QuotationPath');">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download font-small-4 me-50">
+                                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                                                    </svg>Download
+                                                                </a>
+                                                                <a href="#" class="dropdown-item" onclick="location.href='@Url.Action("edit", "quotations", new { id = item.QuotationId })'">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-small-4 me-50">
+                                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                    </svg>Edit
+                                                                </a>
+                                                                <a href="#" class="dropdown-item" onclick="location.href='@Url.Action("delete", "quotations", new { id = item.QuotationId })'">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-small-4 me-50">
+                                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    </svg>Delete
+                                                                </a>@*
+                <a href="#" class="dropdown-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy font-small-4 me-50">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>Duplicate
+                </a>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="spinnerload"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="odd">
+                                                <td class=" control" tabindex="0" style="display: none;">
+                                                    <input type="hidden" value="@item.QuotationId" class="hdnRefId" />
+                                                </td>
+                                                <td class="sorting_1">
+                                                    <div class="d-flex justify-content-left align-items-center">
+
+                                                        <div class="d-flex flex-column">
+                                                            <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                                                <span class="fw-bolder">@item.QuotationNo</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><span class="text-nowrap">@item.QuotationDate.ToString("MMM dd yyyy")</span></td>
+                                                <td><span class="text-nowrap limit-charcters">@item.QuotationDueDate.ToString("MMM dd yyyy")</span></td>
+                                                <td><span class="text-nowrap">@company.CompanyName</span></td>
+                                                <td><span class="text-nowrap">@customer.CustomerName</span></td>
+                                                @*<td>
+                                                        <button class="btn btn-sm btn-icon" data-bs-toggle="modal" data-bs-target="#editPermissionModal" style="float: left;" onclick="location.href='@Url.Action("edit", "quotations", new { id = item.QuotationId })'">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-medium-2 text-body"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-icon delete-record" onclick="location.href='@Url.Action("delete", "quotations", new { id = item.QuotationId })'">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-medium-2 text-body"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-icon " onclick="location.href='@Url.Action("preview", "quotations", new { id = item.QuotationId })'">
+                                                            <i data-feather='eye'></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-icon " onclick="quotation.fnGenerateQuotation(@item.QuotationId);">
+                                                            <i data-feather='download-cloud'></i>
+                                                        </button>
+                                                    </td>*@
+                                                <td>
+                                                    <div class="d-flex align-items-center col-actions">
+
+                                                        <a class="me-1" href="#" onclick="quotation.fnGenerateQuotationPrint(@item.QuotationId, this, '@item.QuotationPath');" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Print" aria-label="Send Mail">
+                                                            <i class="fa fa-print"></i>
+                                                        </a>
+                                                        <a class="me-1" href="#" onclick="quotation.fnGenerateQuotationPrint(@item.QuotationId, this, '@item.QuotationPath');" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Print" aria-label="Send Mail">
+                                                            <i data-feather='mail'></i>
+                                                        </a>
+                                                        <a class="me-25" href="#" onclick="location.href='@Url.Action("preview", "quotations", new { id = item.QuotationId })'" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Preview Quotation" aria-label="Preview Quotation">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye font-medium-2 text-body">
+                                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                <circle cx="12" cy="12" r="3"></circle>
+                                                            </svg>
+                                                        </a>
+
+                                                        <div class="dropdown">
+                                                            <a class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical font-medium-2 text-body">
+                                                                    <circle cx="12" cy="12" r="1"></circle>
+                                                                    <circle cx="12" cy="5" r="1"></circle>
+                                                                    <circle cx="12" cy="19" r="1"></circle>
+                                                                </svg>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end" style="">
+                                                                <a href="#" class="dropdown-item" onclick="quotation.fnGenerateQuotation(@item.QuotationId, this, '@item.QuotationPath');">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download font-small-4 me-50">
+                                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                                                    </svg>Download
+                                                                </a>
+                                                                <a href="#" class="dropdown-item" onclick="location.href='@Url.Action("edit", "quotations", new { id = item.QuotationId })'">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit font-small-4 me-50">
+                                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                    </svg>Edit
+                                                                </a>
+                                                                <a href="#" class="dropdown-item" onclick="location.href='@Url.Action("delete", "quotations", new { id = item.QuotationId })'">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash font-small-4 me-50">
+                                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    </svg>Delete
+                                                                </a>@*
+                                                                    <a href="#" class="dropdown-item">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy font-small-4 me-50">
+                                                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                                        </svg>Duplicate
+                                                                    </a>*@
+                                                            </div>
+                                                        </div>
+                                                        <div class="spinnerload"></div>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mx-2 row mb-1">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @Model.pagefirstNumber to @Model.pageLastNumber of @Model.totalCount entries</div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                        <ul class="pagination">
+
+                                            <li class="paginate_button page-item previous @(Model.ShowPrevious == true ? "" : "disabled")" id="DataTables_Table_0_previous">
+                                                <a onclick="quotation.fnQuotationGridPagination(0, 'prev', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                                            </li>
+
+                                            @for (int i = Model.MinPage; i <= Model.MaxPage; i++)
+                                            {
+                                                <li class="paginate_button page-item @(i == Model.currentPage ? "active" : "")">
+                                                    <a onclick="quotation.fnQuotationGridPagination(@i, 'page', this);" aria-controls="DataTables_Table_0" data-dt-idx="@i" tabindex="0" class="page-link">@i</a>
+                                                </li>
+                                            }
+
+                                            <li class="paginate_button page-item next @(Model.ShowNext == true ? "" : "disabled")" id="DataTables_Table_0_next">
+                                                <a onclick="quotation.fnQuotationGridPagination(0, 'next', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- list and filter end -->
+            </section>
+            <!-- users list ends -->
+
+        </div>
+    </div>
+}
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>

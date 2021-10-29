@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<SK_CRM.Models.AdminPanelUserSideMenu>
+
+@{
+
+    string Menu = string.IsNullOrWhiteSpace(ViewBag.Menu) ? "Dashboard" : ViewBag.Menu;
+
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        <li class="@(Menu == "Dashboard" ? "active" : "") nav-item menu-dashboard">
+            <a class="d-flex align-items-center side-menu-a" href="/">
+                <i data-feather="home"></i>
+                <span class="menu-title text-truncate" data-i18n="_PartialAdminDashboard">Dashboards</span>
+            </a>
+
+        </li>
+        <li class=" navigation-header">
+            <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
+        </li>
+
+        @*<li class=" nav-item">
+            <a class="d-flex align-items-center" href="#">
+                <i data-feather="shield"></i><span class="menu-title text-truncate" data-i18n="Company">Company Details</span>
+            </a>
+            <ul class="menu-content">
+                <li class="@(Menu == "CompanyList" ? "active" : "")">
+                    <a class="d-flex align-items-center" href="/company">
+                        <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Roles">List</span>
+                    </a>
+                </li>
+                <li class="@(Menu == "AddCompany" ? "active" : "")">
+                    <a class="d-flex align-items-center" href="/company/create">
+                        <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Permission">Add Company</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class=" nav-item">
+            <a class="d-flex align-items-center" href="#">
+                <i data-feather="user"></i>
+                <span class="menu-title text-truncate" data-i18n="User">Products</span>
+            </a>
+            <ul class="menu-content">
+                <li class="@(Menu == "ProductList" ? "active" : "")">
+                    <a class="d-flex align-items-center side-menu-a" href="/product">
+                        <i data-feather="circle"></i>
+                        <span class="menu-title menu-item text-truncate" data-i18n="_PartialGetAllProduct">List</span>
+                    </a>
+                </li>
+                <li class="@(Menu == "AddProduct" ? "active" : "")">
+                    <a class="d-flex align-items-center side-menu-a" href="/product/create">
+                        <i data-feather="circle"></i>
+                        <span class="menu-title menu-item text-truncate" data-i18n="_PartialAddProduct">Add Product</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class=" nav-item">
+            <a class="d-flex align-items-center" href="#">
+                <i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Quotation">Quotations</span>
+            </a>
+            <ul class="menu-content">
+                <li class="@(Menu == "QuotationList" ? "active" : "")">
+                    <a class="d-flex align-items-center" href="/quotations"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                </li>
+
+                <li class="@(Menu == "AddQuotation" ? "active" : "")">
+                    <a class="d-flex align-items-center" href="/quotations/create"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Add Quotation">Add Quotation</span></a>
+                </li>
+            </ul>
+        </li>*@
+        @foreach (var item in Model.Where(obj => obj.IsMainMenu == 1))
+        {
+            if (item.IsMainMenu == 1 && item.NoofSubMenus == 0)
+            {
+
+                <li class="nav-item">
+                    <a class="d-flex align-items-center" href="@item.URLPath">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <span class="menu-title text-truncate" data-i18n="@item.FontIcon">@item.MenuName</span>
+                    </a>
+                </li>
+
+            }
+            else
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather="@item.FontIcon.ToLower()"></i><span class="menu-title text-truncate" data-i18n="@item.FontIcon">@item.MenuName</span>
+                    </a>
+                    <ul class="menu-content">
+                        @foreach (var subitem in Model.Where(obj => obj.MainMenuId == item.MenuId))
+                        {
+                            <li class="@(Menu == subitem.MenuName ? "active" : "")">
+                                <a class="d-flex align-items-center" href="@subitem.URLPath">
+                                    <i data-feather="@subitem.FontIcon"></i><span class="menu-item text-truncate" data-i18n="@subitem.MenuName">@subitem.MenuName</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        }
+
+    </ul>
+}

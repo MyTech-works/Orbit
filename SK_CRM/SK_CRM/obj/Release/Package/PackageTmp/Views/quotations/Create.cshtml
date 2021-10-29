@@ -1,0 +1,10 @@
+﻿@model SK_CRM.Models.Quotation
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+@{
+    Html.RenderAction("_PartialQuotationAdd", "quotations");
+}

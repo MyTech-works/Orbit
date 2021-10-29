@@ -1,0 +1,334 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9">
+    <meta name="description" content="BigShopr">
+    <meta name="author" content="BigShopr">
+    @RenderSection("metatags", false)
+    <title>@ViewBag.Title</title>
+
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="~/AssetHome/images/fav.png">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/font-awesome.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/flag-icon.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/icofont.css">
+    <!-- Prism css-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/prism.css">
+    <!-- Chartist css -->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/chartist.css">
+    <!-- vector map css -->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/vector-map.css">
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/admin.css">
+
+    <!--Datatable css-->
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+    <!-- Datepicker css-->
+    <link rel="stylesheet" type="text/css" href="~/AdminPanel/assets/css/date-picker.css">
+    @*<link rel="stylesheet" type="text/css" href="~/Content/mycart.css">*@
+    @*<script src="~/assets/canvasjs.min.js"></script>
+    <link href="~/Content/css/paginate.css" rel="stylesheet" />*@
+    <style>
+        #categoryModal, #orderStatusModal, #divisionsModal {
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            bottom: 0;
+            left: 0;
+            z-index: 10040;
+            overflow: auto;
+            overflow-y: auto;
+        }
+
+        #scroll-to-top {
+            position: fixed;
+            right: 10px;
+            bottom: 100px;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            background-color: #2874f0;
+            text-indent: -9999px;
+            display: none;
+            -webkit-border-radius: 60px;
+            -moz-border-radius: 60px;
+            border-radius: 60px;
+            z-index: 99999;
+        }
+
+            #scroll-to-top span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -8px;
+                margin-top: -12px;
+                height: 0;
+                width: 0;
+                border: 8px solid transparent;
+                border-bottom-color: #ffffff;
+            }
+
+            #scroll-to-top:hover {
+                background-color: #e74c3c;
+                opacity: 1;
+                filter: "alpha(opacity=100)";
+                -ms-filter: "alpha(opacity=100)";
+            }
+
+        .rainbow-progress {
+            height: 5px;
+            width: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, red 0%, yellow 15%, lime 30%, cyan 50%, blue 65%, magenta 80%, red 100%);
+            background-size: 200%;
+            animation: moveGradient 5s linear infinite;
+        }
+
+        @@keyframes moveGradient {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: -200% 0%;
+            }
+        }
+
+        .hide-div {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal" id="categoryModal">
+
+    </div>
+
+    <div class="modal" id="divisionsModal">
+
+    </div>
+
+    <div class="modal" id="orderStatusModal">
+
+    </div>
+
+    <div class="modal" id="divItemsModal">
+
+    </div>
+
+    <a href="#" id="scroll-to-top" style="display: none;"><span><i class="fa fa-angle-double-up" aria-hidden="true"></i></span></a>
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper">
+        <!-- Page Header Start-->
+        @{
+            Html.RenderAction("GetAdminMainHeader", "admin");
+        }
+        <!-- Page Header Ends -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            <div class="page-sidebar">
+                @{
+                    Html.RenderAction("GetAdminSideMenuBar", "admin");
+                }
+            </div>
+            <!-- Page Sidebar Ends-->
+            <!-- Right sidebar Start-->
+            <div class="right-sidebar" id="right_side_bar">
+                <div>
+                    <div class="container p-0">
+                        <div class="modal-header p-l-20 p-r-20">
+                            <div class="col-sm-8 p-0">
+                                <h6 class="modal-title font-weight-bold">FRIEND LIST</h6>
+                            </div>
+                            <div class="col-sm-4 text-right p-0"><i class="mr-2" data-feather="settings"></i></div>
+                        </div>
+                    </div>
+                    <div class="friend-list-search mt-0">
+                        <input type="text" placeholder="search friend"><i class="fa fa-search"></i>
+                    </div>
+                    <div class="p-l-30 p-r-30">
+                        <div class="chat-box">
+                            <div class="people-list friend-list">
+                                <ul class="list">
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/user.png" alt="">
+                                        <div class="status-circle online"></div>
+                                        <div class="about">
+                                            <div class="name">Vincent Porter</div>
+                                            <div class="status"> Online</div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/user1.jpg" alt="">
+                                        <div class="status-circle away"></div>
+                                        <div class="about">
+                                            <div class="name">Ain Chavez</div>
+                                            <div class="status"> 28 minutes ago</div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/user2.jpg" alt="">
+                                        <div class="status-circle online"></div>
+                                        <div class="about">
+                                            <div class="name">Kori Thomas</div>
+                                            <div class="status"> Online</div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/user3.jpg" alt="">
+                                        <div class="status-circle online"></div>
+                                        <div class="about">
+                                            <div class="name">Erica Hughes</div>
+                                            <div class="status"> Online</div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/man.png" alt="">
+                                        <div class="status-circle offline"></div>
+                                        <div class="about">
+                                            <div class="name">Ginger Johnston</div>
+                                            <div class="status"> 2 minutes ago</div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/user5.jpg" alt="">
+                                        <div class="status-circle away"></div>
+                                        <div class="about">
+                                            <div class="name">Prasanth Anand</div>
+                                            <div class="status"> 2 hour ago</div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img class="rounded-circle user-image" src="~/AdminPanel/assets/images/dashboard/designer.jpg" alt="">
+                                        <div class="status-circle online"></div>
+                                        <div class="about">
+                                            <div class="name">Hileri Jecno</div>
+                                            <div class="status"> Online</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right sidebar Ends-->
+
+            @RenderBody()
+
+            <!-- footer start-->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 footer-copyright">
+                            <p class="mb-0">Copyright 2021 © IcoonTool.com All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="pull-right mb-0">Hand crafted & made with<i class="fa fa-heart"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- footer end-->
+        </div>
+    </div>
+    <!-- Body Start -->
+
+    <div id="divalert_message" class="alert" style="display: none;">
+        <span id="alert_messagecontent"></span>
+    </div>
+    <div id="common-hider" class="overlay-hider"></div>
+
+    <!-- Body End -->
+    <!-- latest jquery-->
+    <script src="~/AdminPanel/assets/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/AdminPanel/assets/js/popper.min.js"></script>
+    <script src="~/AdminPanel/assets/js/bootstrap.js"></script>
+    <!-- feather icon js-->
+    <script src="~/AdminPanel/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/AdminPanel/assets/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="~/AdminPanel/assets/js/sidebar-menu.js"></script>
+    <!--chartist js-->
+    <script src="~/AdminPanel/assets/js/chart/chartist/chartist.js"></script>
+
+    <!-- lazyload js-->
+    <script src="~/AdminPanel/assets/js/lazysizes.min.js"></script>
+    <!--copycode js-->
+    <script src="~/AdminPanel/assets/js/prism/prism.min.js"></script>
+    <script src="~/AdminPanel/assets/js/clipboard/clipboard.min.js"></script>
+    <script src="~/AdminPanel/assets/js/custom-card/custom-card.js"></script>
+    <!--counter js-->
+    <script src="~/AdminPanel/assets/js/counter/jquery.waypoints.min.js"></script>
+    <script src="~/AdminPanel/assets/js/counter/jquery.counterup.min.js"></script>
+    <script src="~/AdminPanel/assets/js/counter/counter-custom.js"></script>
+    <!--Customizer admin-->
+    <script src="~/AdminPanel/assets/js/admin-customizer.js"></script>
+    <!--map js-->
+    <script src="~/AdminPanel/assets/js/vector-map/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="~/AdminPanel/assets/js/vector-map/map/jquery-jvectormap-world-mill-en.js"></script>
+    <!--apex chart js-->
+    <script src="~/AdminPanel/assets/js/chart/apex-chart/apex-chart.js"></script>
+    <script src="~/AdminPanel/assets/js/chart/apex-chart/stock-prices.js"></script>
+    <!--chartjs js-->
+    <script src="~/AdminPanel/assets/js/chart/flot-chart/excanvas.js"></script>
+    <script src="~/AdminPanel/assets/js/chart/flot-chart/jquery.flot.js"></script>
+    <script src="~/AdminPanel/assets/js/chart/flot-chart/jquery.flot.time.js"></script>
+    <script src="~/AdminPanel/assets/js/chart/flot-chart/jquery.flot.categories.js"></script>
+    <script src="~/AdminPanel/assets/js/chart/flot-chart/jquery.flot.stack.js"></script>
+    <script src="~/AdminPanel/assets/js/chart/flot-chart/jquery.flot.pie.js"></script>
+    <!--dashboard custom js-->
+    <script src="~/AdminPanel/assets/js/dashboard/default.js"></script>
+    <!--right sidebar js-->
+    <script src="~/AdminPanel/assets/js/chat-menu.js"></script>
+    <!--height equal js-->
+    <script src="~/AdminPanel/assets/js/equal-height.js"></script>
+    <!-- lazyload js-->
+    <script src="~/AdminPanel/assets/js/lazysizes.min.js"></script>
+    <!--script admin-->
+    <script src="~/AdminPanel/assets/js/admin-script.js"></script>
+    <!--Datatable js-->
+    <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+    <!--Datepicker jquery-->
+    <script src="~/AdminPanel/assets/js/datepicker/datepicker.js"></script>
+    <script src="~/AdminPanel/assets/js/datepicker/datepicker.en.js"></script>
+    <script src="~/AdminPanel/assets/js/datepicker/datepicker.custom.js"></script>
+    <script>
+        
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#scroll-to-top').fadeIn();
+                } else {
+                    $('#scroll-to-top').fadeOut();
+                }
+            });
+            $('#scroll-to-top').click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+        });
+    </script>
+
+</body>
+</html>

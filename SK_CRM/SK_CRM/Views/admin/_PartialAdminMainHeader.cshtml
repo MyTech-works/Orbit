@@ -1,0 +1,150 @@
+﻿
+<div class="page-main-header">
+    <div class="main-header-left">
+        <div class="logo-wrapper">
+            <a href="/home">
+                @if (string.IsNullOrWhiteSpace(ViewBag.CompanyLogo))
+                {
+                    <img class="blur-up lazyloaded" src="~/AssetHome/images/Bigshopr.png" alt="Company Logo">
+                }
+                else
+                {
+                    <img class="blur-up lazyloaded" src="@ViewBag.CompanyLogo.Replace("/Images/CompanyLogo/", "/Images/150X150/CompanyLogo/")" alt="Company Logo">
+                }
+
+            </a>
+        </div>
+    </div>
+    <div class="main-header-right row">
+        <div class="mobile-sidebar">
+            <div class="media-body text-right switch-sm">
+                <label class="switch">
+                    <input id="sidebar-toggle" type="checkbox" checked="checked"><span class="switch-state"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="nav-right col">
+            <ul class="nav-menus">
+                <li>
+                    <div class="form-inline search-form searchbox-hide" id="searchboxmaindiv">
+                        <div class="form-group">
+                            <input class="form-control-plaintext" id="searchtext" name="searchtext" type="search" placeholder="Search.."><span class="d-sm-none mobile-search"><i data-feather="search"></i></span>
+                        </div>
+                    </div>
+                </li>
+                @*<li class="onhover-dropdown">
+                        <a class="txt-dark" href="#">
+                            <h6>EN</h6>
+                        </a>
+                        <ul class="language-dropdown onhover-show-div p-20">
+                            <li><a href="#" data-lng="pt"><i class="flag-icon flag-icon-uy"></i> Portuguese</a></li>
+                            <li><a href="#" data-lng="es"><i class="flag-icon flag-icon-um"></i> Spanish</a></li>
+                            <li><a href="#" data-lng="en"><i class="flag-icon flag-icon-is"></i> English</a></li>
+                            <li><a href="#" data-lng="fr"><i class="flag-icon flag-icon-nz"></i> French</a></li>
+                        </ul>
+                    </li>*@
+                <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
+                <li class="onhover-dropdown">
+                    <i data-feather="bell"></i><span class="badge badge-pill badge-primary pull-right notification-badge">3</span><span class="dot"></span>
+                    <ul class="notification-dropdown onhover-show-div p-0">
+                        <li>
+                            <div class="media">
+                                <div class="notification-icons bg-success mr-3"><i data-feather="thumbs-up"></i></div>
+                                <div class="media-body">
+                                    <h6 class="font-success">Someone Likes Your Posts</h6>
+                                    <p class="mb    -0"> 2 Hours Ago</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="media">
+                                <div class="notification-icons bg-info mr-3"><i data-feather="message-circle"></i></div>
+                                <div class="media-body">
+                                    <h6 class="font-info">3 New Comments</h6>
+                                    <p class="mb-0"> 1 Hours Ago</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="media">
+                                <div class="notification-icons bg-secondary mr-3"><i data-feather="download"></i></div>
+                                <div class="media-body">
+                                    <h6 class="font-secondary">Download Complete</h6>
+                                    <p class="mb-0"> 3 Days Ago</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="bg-light txt-dark"><a href="#" data-original-title="" title="">All </a> notification</li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="right_side_toggle" data-feather="message-square"></i><span class="dot"></span></a></li>
+                <li class="onhover-dropdown">
+                    <div class="media align-items-center">
+                        @if (ViewBag.userProfileImage != "")
+                        {
+                            <img class="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded" src="@ViewBag.userProfileImage.Replace("/Images/UserImage/", "/Images/150X150/UserImage/")" alt="header-user">
+                        }
+                        else
+                        {
+                            <img class="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded" src="~/AssetAdmin/images/userlogo.png" alt="header-user">
+                        }
+
+                        <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
+                    </div>
+                    <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                        @*<li><a href="#">Profile<span class="pull-right"><i data-feather="user"></i></span></a></li>
+                            <li><a href="#">Inbox<span class="pull-right"><i data-feather="mail"></i></span></a></li>
+                            <li><a href="#">Taskboard<span class="pull-right"><i data-feather="file-text"></i></span></a></li>*@
+                        <li><a href="/DataImport">Qucik Import<span class="pull-right"><i data-feather="upload"></i></span></a></li>
+                        <li><a onclick="clicklogout();">Logout<span class="pull-right"><i data-feather="lock"></i></span></a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="d-lg-none mobile-toggle pull-right"><i data-feather="more-horizontal"></i></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    //function clicklogout() {
+    //    $.ajax({
+    //        url: '/Account/LogOffJson',
+    //        type: 'POST',
+    //        dataType: 'json',
+    //        contentType: 'application/json; charset=utf-8',
+    //        data: '',
+    //        success: function (response) {
+    //            if (response.success) {
+    //                window.location.href = "/Home";
+    //            }
+    //            closehider();
+    //        },
+    //        failure: function (response) {
+    //            alert(response.msg);
+    //        },
+    //        error: function (response) {
+    //            alert(response.msg);
+    //        }
+    //    });
+    //}
+    $(document).ready(function () {
+        $('#searchtext').keypress(function (e) {
+            var key = e.which;
+            if (key == 13)  // the enter key code
+            {
+                //if ($('#searchtext').val() != "") {
+                //alert($(location).attr('pathname'));
+                var path = $(location).attr('pathname');
+                window.location.href = path + "?searchtext=" + $('#searchtext').val();
+                //}
+
+                //return false;ssssss
+            }
+        });
+    });
+</script>

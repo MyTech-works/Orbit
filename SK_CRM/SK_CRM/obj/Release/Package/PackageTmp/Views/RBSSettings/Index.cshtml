@@ -1,0 +1,309 @@
+﻿@model SK_CRM.Models.RBSSettingsModal
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout/_LayoutAdminPanel.cshtml";
+}
+
+<style>
+    .dot {
+        height: 25px;
+        width: 25px;
+        background-color: #2196f3;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+
+
+    .form-check-input {
+        margin-top: 15px;
+    }
+
+    .fa {
+        margin-top: 5px;
+        margin-left: 2px;
+    }
+
+    .btn {
+        background-color: #2196f3;
+        color: white;
+    }
+
+    .form-check-label {
+        margin-bottom: 0;
+        color: white;
+    }
+
+    .role-header {
+        padding: 10px;
+        background: darkgray;
+        color: white;
+    }
+
+    #divroles {
+        padding-left: 30px;
+        background-color: #03a9f4;
+        max-height: 356px;
+        overflow: auto;
+        overflow-x: hidden;
+    }
+
+    .form-check-input {
+        position: absolute;
+        margin-left: 0;
+    }
+
+    .disabled-row {
+        background-color: #ebe4e48c;
+    }
+    .card .card-body {
+        padding: 10px;
+        background-color: rgba(0,0,0,0);
+    }
+
+    .form-check {
+        position: relative;
+        display: block;
+        /* padding-left: 10px; */
+        padding: 10px;
+    }
+
+    .text-align-r {
+        text-align: right;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+
+    .box {
+        box-shadow: 0 0 15px rgba(0,0,0,.1);
+    }
+
+    /* common */
+    .ribbon {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        position: absolute;
+    }
+
+        .ribbon::before,
+        .ribbon::after {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            display: block;
+            border: 5px solid #2980b9;
+        }
+
+        .ribbon span {
+            opacity: 0.5;
+            position: absolute;
+            display: block;
+            width: 225px;
+            padding: 15px 0;
+            background-color: #3498db;
+            box-shadow: 0 5px 10px rgba(0,0,0,.1);
+            color: #fff;
+            font: 700 18px/1 'Lato', sans-serif;
+            text-shadow: 0 1px 1px rgba(0,0,0,.2);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+    /* top left*/
+    .ribbon-top-left {
+        top: 0px;
+        left: 0px;
+    }
+
+        .ribbon-top-left::before,
+        .ribbon-top-left::after {
+            border-top-color: transparent;
+            border-left-color: transparent;
+        }
+
+        .ribbon-top-left::before {
+            top: 0;
+            right: 0;
+        }
+
+        .ribbon-top-left::after {
+            bottom: 0;
+            left: 0;
+        }
+
+        .ribbon-top-left span {
+            right: -25px;
+            top: 30px;
+            transform: rotate(-45deg);
+        }
+
+    #top-tabContent {
+        max-height: 332px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-left: 20px;
+    }
+
+    .card-with-ribbon {
+        min-height: 415px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .tab2-card ul {
+        margin-bottom: 10px !important;
+    }
+
+    .created {
+        background-color: #00bcd4 !important;
+        color: white;
+    }
+
+    .shipped {
+        background-color: #f77f0c !important;
+        color: white;
+    }
+
+    .packed {
+        background-color: #673ab7 !important;
+        color: white;
+    }
+
+    .delivered {
+        background-color: #4CAF50 !important;
+        color: white;
+    }
+
+    .deliveryfailed {
+        background-color: #fd0202 !important;
+        color: white;
+    }
+</style>
+
+
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <!-- users list start -->
+        <section class="app-user-list">
+
+            <!-- list and filter start -->
+            <div class="card">
+
+                <div class="card-datatable table-responsive pt-0">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="row">
+                            <div class="col-md-4 user_role" style="padding-left: 20px; padding-top: 10px;">
+                                <label class="form-label" for="UserRole">Role</label>
+                                <select id="ddlrole" class="form-select text-capitalize mb-md-0 mb-2" onchange="RBS.fnRoleOnChange();">
+                                    <option value=""> Select Role </option>
+                                    @{
+                                        int lo = 0;
+                                        foreach (var item in Model.rBSRoles)
+                                        {
+                                            if (lo == 0)
+                                            {
+                                                <option class="text-capitalize" selected value="@item.Id">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option class="text-capitalize" value="@item.Id">@item.Name</option>
+                                            }
+                                            lo = 1;
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4 user_plan"></div>
+                            <div class="col-md-4 user_status"></div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center header-actions mx-2 row mt-75">
+                            <div class="col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start">
+                                <div class="dataTables_length" id="DataTables_Table_0_length">
+                                    <label>
+                                        Show
+                                        <select onchange="RBS.fnRoleGridPagination(0, 'pagesize', this);" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="ddlPageSize" class="form-select">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> entries
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-8 ps-xl-75 ps-0">
+                                <div class="dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap">
+                                    <div class="me-1">
+                                        <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                            <label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0" id="txtSearchValue" onkeyup="RBS.fnRoleGridPagination(1, 'search', this);"></label>
+                                        </div>
+                                    </div>
+                                    <div class="dt-buttons d-inline-flex mt-50">
+                                        @*<button class="dt-button buttons-collection btn btn-outline-secondary dropdown-toggle me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="true">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link font-small-4 me-50">
+                                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                                    </svg>Export
+                                                </span>
+                                            </button>*@
+                                        <button class="dt-button add-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
+                                                type="button" data-bs-toggle="modal" data-bs-target="#" onclick="RBS.fnSaveRoleRBSGrid();">
+                                            <span>Save</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divRBSSettings">
+                            @{
+                                Html.RenderAction("GetRBSRoleGridDetails", "RBSSettings", new { RoleId = Model.rBSRoles.FirstOrDefault().Id });
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- list and filter end -->
+            
+        </section>
+        <!-- users list ends -->
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+
+<script>
+
+    //$('#myTable').removeClass("searchbox-hide");
+     var searchtext = "@ViewBag.searchtext";
+    $("#searchtext").val(searchtext);
+    //$("#searchboxmaindiv").removeClass("dataTable");
+
+    $(document).ready(function () {
+
+        $(".form-check").unbind().click(function () {
+
+            $(this).prev().find(".form-check-input")[0].checked = true;
+           // AjaxLoadShow();
+            $('#divRBSRoleGrid').empty();
+            var RoleId = $("#ddlrole").val();
+            RoleId = RoleId == undefined || RoleId == null ? "" : RoleId;
+            $('#divRBSRoleGrid').load("/RBSSettings/GetRBSRoleGridDetails", {
+                RoleId: RoleId
+            }, function () {
+
+               // AjaxLoadHide();
+            });
+        });
+    });
+</script>
+
+
+

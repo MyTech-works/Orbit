@@ -1,0 +1,284 @@
+﻿@model SK_CRM.Models.Quotation
+
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+
+        <!-- Vertical Wizard -->
+        <section class="vertical-wizard">
+            <div class="bs-stepper vertical vertical-wizard-example">
+                <div class="bs-stepper-header">
+                    <div class="step" data-target="#account-details-vertical" role="tab" id="account-details-vertical-trigger">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">1</span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Quotaion Details</span>
+                                <span class="bs-stepper-subtitle">Setup Quotaion Details</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="step" data-target="#social-links-vertical" role="tab" id="social-links-vertical-trigger">
+                        <button type="button" class="step-trigger">
+                            <span class="bs-stepper-box">2</span>
+                            <span class="bs-stepper-label">
+                                <span class="bs-stepper-title">Quotation Products</span>
+                                <span class="bs-stepper-subtitle">Add Quotation Products</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bs-stepper-content">
+                    <div id="account-details-vertical"
+                         class="content"
+                         role="tabpanel"
+                         aria-labelledby="account-details-vertical-trigger">
+                        <div class="content-header">
+                            <h5 class="mb-0">Quotaion Details</h5>
+                            <small class="text-muted">Enter Your Quotation Details.</small>
+                        </div>
+                        @*@Html.HiddenFor(model => model.QuotationId)*@
+                    <form>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.QuotationId, htmlAttributes: new { @class = "form-label" })
+                                @*@Html.EditorFor(model => model.QuotationDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Select Date" } })*@
+                                <input type="text"
+                                       id="QuotationId"
+                                       class="form-control"
+                                       disabled/>
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.QuotationNo, htmlAttributes: new { @class = "form-label" })
+                                @*@Html.EditorFor(model => model.QuotationDueDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Select Date" } })*@
+                                <input type="text"
+                                       id="QuotationNo"
+                                       class="form-control"
+                                       disabled  />
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.QuotationDate, htmlAttributes: new { @class = "form-label" })
+                                @*@Html.EditorFor(model => model.QuotationDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Select Date" } })*@
+                                <input type="text"
+                                       id="QuotationDate"
+                                       class="form-control flatpickr-human-friendly"
+                                       placeholder="October 14, 2020" value="@Model.QuotationDate" />
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.QuotationDueDate, htmlAttributes: new { @class = "form-label" })
+                                @*@Html.EditorFor(model => model.QuotationDueDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Select Date" } })*@
+                                <input type="text"
+                                       id="QuotationDueDate"
+                                       class="form-control flatpickr-human-friendly"
+                                       placeholder="October 14, 2020"  value="@Model.QuotationDueDate"/>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-1 col-md-6">
+                                @*
+                @Html.EditorFor(model => model.BilledByCompanyId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Select Company" } })*@
+
+                                @Html.LabelFor(model => model.BilledByCompanyId, htmlAttributes: new { @class = "form-label" })
+                                <select id="BilledByCompanyId" class="select2 form-select">
+                                    <option value="">Select Company</option>
+                                    @foreach (var item in ViewBag.Companies)
+                                    {
+                                        <option value="@item.CompanyId">@item.CompanyName</option>
+                                    }
+                                </select>
+
+                            </div>
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.BilledToCustomerId, htmlAttributes: new { @class = "form-label" })
+                                <div class="invoice-customer row" id="divPartialCustomerLoad">
+                                    <div class="mb-1 col-md-10">
+                                        @{
+                                            Html.RenderAction("_PartialGetAllCustomers", "PartialView");
+                                        }
+                                    </div>
+                                    <div class="mb-1 col-md-2">
+                                        
+                                        <button type="button" class="btn btn-icon btn-warning waves-effect waves-float waves-light" style="padding: 0.415rem .46rem;"
+                                                data-bs-toggle="modal" data-bs-target="#add-new-customer-sidebar" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                 width="24" height="24"
+                                                 viewBox="0 0 172 172"
+                                                 style=" fill:#000000;">
+                                            <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M86,14.33333c-39.517,0 -71.66667,32.14967 -71.66667,71.66667c0,39.517 32.14967,71.66667 71.66667,71.66667c39.517,0 71.66667,-32.14967 71.66667,-71.66667c0,-39.517 -32.14967,-71.66667 -71.66667,-71.66667zM86,28.66667c31.61217,0 57.33333,25.72117 57.33333,57.33333c0,31.61217 -25.72117,57.33333 -57.33333,57.33333c-31.61217,0 -57.33333,-25.72117 -57.33333,-57.33333c0,-31.61217 25.72117,-57.33333 57.33333,-57.33333zM78.83333,57.33333v21.5h-21.5v14.33333h21.5v21.5h14.33333v-21.5h21.5v-14.33333h-21.5v-21.5z"></path></g></g></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="mb-1 col-md-6">
+                                @Html.LabelFor(model => model.RefPersonId, htmlAttributes: new { @class = "form-label" })
+                                @*<select id="RefPersonId" class="select2 form-select">
+                                    <option value="">Select RefPerson</option>
+                                    @foreach (var item in ViewBag.Companies)
+                                    {
+                                        <option value="@item.CompanyId">@item.CompanyName</option>
+                                    }
+                                </select>*@
+                                <div class="invoice-customer row" id="divPartialRefPersonLoad">
+                                    <div class="mb-1 col-md-10">
+                                        @{
+                                            Html.RenderAction("_PartialGetAllRefPersons", "PartialView");
+                                        }
+                                    </div>
+                                    <div class="mb-1 col-md-2">
+
+                                        <button type="button" class="btn btn-icon btn-warning waves-effect waves-float waves-light" style="padding: 0.415rem .46rem;"
+                                                data-bs-toggle="modal" data-bs-target="#add-new-customer-sidebar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                 width="24" height="24"
+                                                 viewBox="0 0 172 172"
+                                                 style=" fill:#000000;">
+                                                <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M86,14.33333c-39.517,0 -71.66667,32.14967 -71.66667,71.66667c0,39.517 32.14967,71.66667 71.66667,71.66667c39.517,0 71.66667,-32.14967 71.66667,-71.66667c0,-39.517 -32.14967,-71.66667 -71.66667,-71.66667zM86,28.66667c31.61217,0 57.33333,25.72117 57.33333,57.33333c0,31.61217 -25.72117,57.33333 -57.33333,57.33333c-31.61217,0 -57.33333,-25.72117 -57.33333,-57.33333c0,-31.61217 25.72117,-57.33333 57.33333,-57.33333zM78.83333,57.33333v21.5h-21.5v14.33333h21.5v21.5h14.33333v-21.5h21.5v-14.33333h-21.5v-21.5z"></path></g></g>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-1 col-md-6">
+
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-outline-secondary btn-prev" disabled>
+                                <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
+                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                            </button>
+                            <button class="btn btn-primary btn-next" id="btnProductNext" style="display:none;">
+                                <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                <i data-feather="arrow-right" class="align-middle ms-sm-25 ms-0"></i>
+                            </button>
+                            <button class="btn btn-primary btn-next-validate" onclick="quotation.fnQuotationNextButtonValidation();">
+                                <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                <i data-feather="arrow-right" class="align-middle ms-sm-25 ms-0"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="social-links-vertical" class="content" role="tabpanel" aria-labelledby="social-links-vertical-trigger">
+                        <div class="content-header">
+                            <h5 class="mb-0">Quotation Products</h5>
+                            <small>Select Quotation Products</small>
+                        </div>
+                        <div id="divQuotationProducts">
+                            @{
+                                Html.RenderAction("_PartialGetQuotationProducts", "PartialView");
+                            }
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary btn-prev">
+                                <i data-feather="arrow-left" class="align-middle me-sm-25 me-0"></i>
+                                <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                            </button>
+                            <button class="btn btn-success" type="button" onclick="quotation.fnUpdateQuotation();" id="btnSave"><i class="fa fa-spinner fa-spin hide-spinner"></i>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Vertical Wizard -->
+        <!-- Add New Customer Sidebar -->
+        <div class="modal modal-slide-in fade" id="add-new-customer-sidebar" aria-hidden="true">
+            <div class="modal-dialog sidebar-lg">
+                <div class="modal-content p-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                    <div class="modal-header mb-1">
+                        <h5 class="modal-title">
+                            <span class="align-middle">Add Customer</span>
+                        </h5>
+                    </div>
+                    <div class="modal-body flex-grow-1">
+                        <form>
+                            <div class="mb-1">
+                                <label for="customer-name" class="form-label">Customer Name</label>
+                                <input type="text" class="form-control" id="customer-name" placeholder="John Doe" />
+                            </div>
+                            <div class="mb-1">
+                                <label for="customer-email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="customer-email" placeholder="example@domain.com" />
+                            </div>
+                            <div class="mb-1">
+                                <label for="customer-address" class="form-label">Address (Area and Street)</label>
+                                <input type="text" class="form-control" id="customer-address" placeholder="1307 Lady Bug Drive New York" />
+                            </div>
+                           
+                            <div class="mb-1">
+                                <label for="customer-Locality" class="form-label">Locality</label>
+                                <input type="text" class="form-control" id="customer-Locality" placeholder="Locality" />
+                            </div>
+                            <div class="mb-1">
+                                <label for="customer-City" class="form-label">City</label>
+                                <input type="text" class="form-control" id="customer-City" placeholder="City" />
+                            </div>
+                            <div class="mb-1">
+                                <label for="customer-Pincode" class="form-label">Pincode</label>
+                                <input type="text" class="form-control" id="customer-Pincode" placeholder="Pincode" />
+                            </div>
+                            <div class="mb-1 position-relative" id="divCountry">
+                                <label for="customer-country" class="form-label">Country</label>
+
+                                <select class="select2 form-select" id="customer-country" name="customer-country">
+                                    <option label="select country"></option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="India">India</option>
+                                    <option value="Russia">Russia</option>
+                                    <option value="Saudi Arabia">Saudi Arabia</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Sweden">Sweden</option>
+                                    <option value="Switzerland">Switzerland</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="United Arab Emirates">United Arab Emirates</option>
+                                    <option value="United States of America">United States of America</option>
+                                </select>
+                            </div>
+                            <div class="mb-1">
+                                <label for="customer-contact" class="form-label">Contact</label>
+                                <input type="number" class="form-control" id="customer-contact" placeholder="763-242-9206" />
+                            </div>
+                            <div class="mb-1 d-flex flex-wrap mt-2">
+                                <button type="button" id="btnAddNewCustomer" onclick="customer.fnSaveCustomer();" class="btn btn-primary me-1">Add</button>
+                                <button type="button" id="btnAddCustomerClose" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Add New Customer Sidebar -->
+    </div>
+
+</div>
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    var QuotationID = "@Model.QuotationId";
+    var QuotationNo = "@Model.QuotationNo";
+    var QuotationDate = "@Model.QuotationDate";
+    var QuotationDueDate = "@Model.QuotationDueDate";
+    var BilledByCompanyId = "@Model.BilledByCompanyId";
+    var BilledToCustomerId = "@Model.BilledToCustomerId";
+    var RefPersonId = "@Model.RefPersonId";
+
+    $("#QuotationId").val(QuotationID);
+    $("#QuotationNo").val(QuotationNo);
+    $("#QuotationDate").val(QuotationDate);
+    $("#QuotationDueDate").val(QuotationDueDate);
+    $("#BilledByCompanyId").val(BilledByCompanyId);
+    $("#BilledToCustomerId").val(BilledToCustomerId);
+    $("#RefPersonId").val(RefPersonId);
+</script>

@@ -1,0 +1,218 @@
+﻿@model SK_CRM.Models.AggregateModel.Product.ProductDetailsAllModel
+@{
+    <!-- list and filter start -->
+    <div class="card">
+        <div class="card-datatable table-responsive pt-0">
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="d-flex justify-content-between align-items-center header-actions mx-2 row mt-75">
+                    <div class="col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start">
+                        <div class="dataTables_length" id="DataTables_Table_0_length">
+                            <label>
+                                Show
+                                <select onchange="quotation.fnQuotationProductGridPagination(0, 'pagesize', this);" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="ddlPageSize" class="form-select">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select> entries
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-8 ps-xl-75 ps-0">
+                        <div class="dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap">
+                            <div class="me-1">
+                                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                    <label>
+                                        Search:
+                                        <input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0" id="txtSearchValue" onkeyup="quotation.fnQuotationProductGridPagination(1, 'search', this);">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="dt-buttons d-inline-flex mt-50">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="user-list-table table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1035px;">
+                    <thead class="table-light">
+                        <tr role="row">
+                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">
+                                <input class="form-check-input" type="checkbox" id="chkSelectAllProduct" value="" onchange="quotation.fnSelectAllProducts();">Select
+                            </th>
+                            <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label=""></th>
+                            <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending">Code</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Name</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Unit Price</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Quantity</th>
+                            @*<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Plan: activate to sort column ascending">Total Price</th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyQuotationProduct">
+
+                        @foreach (var item in Model.products)
+                        {
+                            int i = item.Id;
+                            string productImage = Model.uploads.Where(x => x.RefId == item.Id).OrderBy(x => x.OrderBy).Select(x => x.ImagePath).FirstOrDefault();
+                            var quoteproduct = Model.quotationProducts.Where(x => x.productId == item.Id && x.IsDeleted == false).FirstOrDefault();
+                            if (i % 2 == 0)
+                            {
+                                <tr class="even">
+                                    <td>
+                                        @if (quoteproduct == null)
+                                        {
+                                            <input class="form-check-input chkquote-product" type="checkbox" id="inlineCheckbox1" value="@item.Id" onchange="quotation.fnQuotationProductSelectOnchange(this);">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input chkquote-product" type="checkbox" id="inlineCheckbox1" value="@item.Id" checked="checked" onchange="quotation.fnQuotationProductSelectOnchange(this);">
+                                        }
+
+                                    </td>
+                                    <td class=" control" tabindex="0" style="display: none;">
+                                        <input type="hidden" value="@item.Id" class="hdnRefId" />
+                                    </td>
+                                    <td class="sorting_1">
+                                        <div class="d-flex justify-content-left align-items-center">
+                                            <div class="avatar-wrapper">
+                                                @if (string.IsNullOrWhiteSpace(productImage))
+                                                {
+                                                    <div class="avatar bg-light-dark me-1">
+                                                        <span class="avatar-content">NA</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="avatar  me-1">
+                                                        <img src="@productImage" alt="Avatar" height="32" width="32">
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                                    <span class="fw-bolder">@item.ProductCode</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-nowrap">@item.ProductName</span></td>
+                                    <td><span class="text-nowrap">@item.UnitPrice</span></td>
+                                    <td>
+                                        @if (quoteproduct == null)
+                                        {
+                                            <input type="number" class="productquantity" disabled />
+                                        }
+                                        else
+                                        {
+                                            <input type="number" class="productquantity" value="@quoteproduct.Quantity" />
+                                        }
+
+                                    </td>
+                                    @*<td><input type="number" class="TotalPrice" disabled /></td>*@
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="odd">
+                                    <td>
+
+                                        @if (quoteproduct == null)
+                                        {
+                                            <input class="form-check-input chkquote-product" type="checkbox" id="inlineCheckbox1" value="@item.Id" onchange="quotation.fnQuotationProductSelectOnchange(this);">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input chkquote-product" type="checkbox" id="inlineCheckbox1" value="@item.Id" checked="checked" onchange="quotation.fnQuotationProductSelectOnchange(this);">
+                                        }
+
+                                    </td>
+                                    <td class=" control" tabindex="0" style="display: none;">
+                                        <input type="hidden" value="@item.Id" class="hdnRefId" />
+                                    </td>
+                                    <td class="sorting_1">
+                                        <div class="d-flex justify-content-left align-items-center">
+                                            <div class="avatar-wrapper">
+                                                @if (string.IsNullOrWhiteSpace(productImage))
+                                                {
+                                                    <div class="avatar bg-light-dark me-1">
+                                                        <span class="avatar-content">NA</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="avatar  me-1">
+                                                        <img src="@productImage" alt="Avatar" height="32" width="32">
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a href="app-user-view-account.html" class="user_name text-truncate text-body">
+                                                    <span class="fw-bolder">@item.ProductCode</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-nowrap">@item.ProductName</span></td>
+                                    <td><span class="text-nowrap">@item.UnitPrice</span></td>
+                                    <td>
+                                        @if (quoteproduct == null)
+                                        {
+                                            <input type="number" class="productquantity" disabled />
+                                        }
+                                        else
+                                        {
+                                            <input type="number" class="productquantity" value="@quoteproduct.Quantity" />
+                                        }
+
+                                    </td>
+                                    @*<td><input type="number" class="TotalPrice" disabled /></td>*@
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between mx-2 row mb-1">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @Model.pagefirstNumber to @Model.pageLastNumber of @Model.totalCount entries</div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <ul class="pagination">
+
+                                <li class="paginate_button page-item previous @(Model.ShowPrevious == true ? "" : "disabled")" id="DataTables_Table_0_previous">
+                                    <a onclick="quotation.fnQuotationProductGridPagination(0, 'prev', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                                </li>
+                                @{
+                                    for (int i = Model.MinPage; i <= Model.MaxPage; i++)
+                                    {
+                                        <li class="paginate_button page-item @(i == Model.currentPage ? "active" : "")">
+                                            <a onclick="quotation.fnQuotationProductGridPagination(@i, 'page', this);" aria-controls="DataTables_Table_0" data-dt-idx="@i" tabindex="0" class="page-link">@i</a>
+                                        </li>
+                                    }
+                                }
+
+
+                                <li class="paginate_button page-item next @(Model.ShowNext == true ? "" : "disabled")" id="DataTables_Table_0_next">
+                                    <a onclick="quotation.fnQuotationProductGridPagination(0, 'next', this);" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- list and filter end -->
+}
+
+<script type="text/javascript" src="~/assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    var pagesize = "@Model.pageSize";
+    var searchvalue = "@ViewBag.searchvalue";
+    $("#ddlPageSize").val(pagesize);
+    $("#txtSearchValue").val(searchvalue);
+</script>
